@@ -456,10 +456,20 @@
   resolved "https://registry.npmjs.org/@oxc-minify/binding-linux-x64-gnu/-/binding-linux-x64-gnu-0.108.0.tgz"
   integrity sha512-ntSsDSVH/xVcAmToA9HmrtqBXPmKQFq94UrU19oHtS/je34kMaUWs7rH9BfT/kiLiSgvsgKdKWBZW0JSR7hgvg==
 
+"@oxc-minify/binding-linux-x64-musl@0.108.0":
+  version "0.108.0"
+  resolved "https://registry.npmjs.org/@oxc-minify/binding-linux-x64-musl/-/binding-linux-x64-musl-0.108.0.tgz"
+  integrity sha512-KtrQg58yUd3TGc60tsy8cDOzMTwgtWAqLIagzxvyVb+6EpqbK5ajbqQ84nasL3Vh9BPZC0j/W+sCCzNO2iZBBg==
+
 "@oxc-transform/binding-linux-x64-gnu@0.108.0":
   version "0.108.0"
   resolved "https://registry.npmjs.org/@oxc-transform/binding-linux-x64-gnu/-/binding-linux-x64-gnu-0.108.0.tgz"
   integrity sha512-APOYvs7APzLHfIop9RQYqP9YkY9g7kQOnOE4KHhodlqOmUYDHpZYeA2QAs7is8KuTo0JETP3fTipG5HiSFJdWg==
+
+"@oxc-transform/binding-linux-x64-musl@0.108.0":
+  version "0.108.0"
+  resolved "https://registry.npmjs.org/@oxc-transform/binding-linux-x64-musl/-/binding-linux-x64-musl-0.108.0.tgz"
+  integrity sha512-vPtmOmBvXCCB1ms68Ne8WoTv97mpDTDY2vgeT4E4NL5OFk9ZT6YVS6cXaJqCBHZNqljL5uIKuAF8gy6ywV1mUA==
 
 "@rolldown/pluginutils@1.0.0-beta.40":
   version "1.0.0-beta.40"
@@ -475,6 +485,11 @@
   version "4.55.1"
   resolved "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.55.1.tgz"
   integrity sha512-a8G4wiQxQG2BAvo+gU6XrReRRqj+pLS2NGXKm8io19goR+K8lw269eTrPkSdDTALwMmJp4th2Uh0D8J9bEV1vg==
+
+"@rollup/rollup-linux-x64-musl@4.55.1":
+  version "4.55.1"
+  resolved "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.55.1.tgz"
+  integrity sha512-bD+zjpFrMpP/hqkfEcnjXWHMw5BIghGisOKPj+2NaNDuVT+8Ds4mPf3XcPHuat1tz89WRL+1wbcxKY3WSbiT7w==
 
 "@solid-primitives/event-listener@^2.4.3":
   version "2.4.3"
@@ -550,6 +565,11 @@
   version "4.1.18"
   resolved "https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.1.18.tgz"
   integrity sha512-v3gyT0ivkfBLoZGF9LyHmts0Isc8jHZyVcbzio6Wpzifg/+5ZJpDiRiUhDLkcr7f/r38SWNe7ucxmGW3j3Kb/g==
+
+"@tailwindcss/oxide-linux-x64-musl@4.1.18":
+  version "4.1.18"
+  resolved "https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.1.18.tgz"
+  integrity sha512-bhJ2y2OQNlcRwwgOAGMY0xTFStt4/wyU6pvI6LSuZpRgKQwxTec0/3Scu91O8ir7qCR3AuepQKLU/kX99FouqQ==
 
 "@tailwindcss/oxide@4.1.18":
   version "4.1.18"
@@ -1129,6 +1149,11 @@
   resolved "https://registry.npmjs.org/@unrs/resolver-binding-linux-x64-gnu/-/resolver-binding-linux-x64-gnu-1.11.1.tgz"
   integrity sha512-C3ZAHugKgovV5YvAMsxhq0gtXuwESUKc5MhEtjBpLoHPLYM+iuwSj3lflFwK3DPm68660rZ7G8BMcwSro7hD5w==
 
+"@unrs/resolver-binding-linux-x64-musl@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.npmjs.org/@unrs/resolver-binding-linux-x64-musl/-/resolver-binding-linux-x64-musl-1.11.1.tgz"
+  integrity sha512-rV0YSoyhK2nZ4vEswT/QwqzqQXw5I6CjoaYMOX0TqBlWhojUf8P94mvI7nuJTeaCkkds3QE4+zS8Ko+GdXuZtA==
+
 "@vitejs/plugin-react@^5.0.4":
   version "5.1.2"
   resolved "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-5.1.2.tgz"
@@ -1431,7 +1456,7 @@ cheerio@^1.0.0:
     undici "^7.12.0"
     whatwg-mimetype "^4.0.0"
 
-chokidar@^3.6.0:
+chokidar@^3.6.0, "chokidar@^4 || ^5":
   version "3.6.0"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz"
   integrity sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==
@@ -1445,13 +1470,6 @@ chokidar@^3.6.0:
     readdirp "~3.6.0"
   optionalDependencies:
     fsevents "~2.3.2"
-
-"chokidar@^4 || ^5":
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/chokidar/-/chokidar-5.0.0.tgz"
-  integrity sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==
-  dependencies:
-    readdirp "^5.0.0"
 
 clsx@^2.1.1:
   version "2.1.1"
@@ -2245,6 +2263,11 @@ lightningcss-linux-x64-gnu@1.30.2:
   resolved "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.30.2.tgz"
   integrity sha512-Cfd46gdmj1vQ+lR6VRTTadNHu6ALuw2pKR9lYq4FnhvgBc4zWY1EtZcAc6EffShbb1MFrIPfLDXD6Xprbnni4w==
 
+lightningcss-linux-x64-musl@1.30.2:
+  version "1.30.2"
+  resolved "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.30.2.tgz"
+  integrity sha512-XJaLUUFXb6/QG2lGIW6aIk6jKdtjtcffUT0NKvIqhSBY3hh9Ch+1LCeH80dR9q9LBjG3ewbDjnumefsLsP6aiA==
+
 lightningcss@^1.21.0, lightningcss@1.30.2:
   version "1.30.2"
   resolved "https://registry.npmjs.org/lightningcss/-/lightningcss-1.30.2.tgz"
@@ -2281,22 +2304,17 @@ loupe@^3.1.0, loupe@^3.1.4:
   resolved "https://registry.npmjs.org/loupe/-/loupe-3.2.1.tgz"
   integrity sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==
 
-lru-cache@^11.2.2:
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-11.2.4.tgz"
-  integrity sha512-B5Y16Jr9LB9dHVkh6ZevG+vAbOsNOYCX+sXvFWFu7B3Iz5mijW3zdbMyhsh8ANd2mSWBYdJgnqi+mL7/LrOPYg==
-
-lru-cache@^11.2.4:
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-11.2.4.tgz"
-  integrity sha512-B5Y16Jr9LB9dHVkh6ZevG+vAbOsNOYCX+sXvFWFu7B3Iz5mijW3zdbMyhsh8ANd2mSWBYdJgnqi+mL7/LrOPYg==
-
-lru-cache@^5.1.1:
+lru-cache@^11.2.2, lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz"
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+lru-cache@^11.2.4:
+  version "11.2.4"
+  resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-11.2.4.tgz"
+  integrity sha512-B5Y16Jr9LB9dHVkh6ZevG+vAbOsNOYCX+sXvFWFu7B3Iz5mijW3zdbMyhsh8ANd2mSWBYdJgnqi+mL7/LrOPYg==
 
 lucide-react@^0.561.0:
   version "0.561.0"
@@ -2621,11 +2639,6 @@ react-refresh@^0.18.0:
   version "19.2.3"
   resolved "https://registry.npmjs.org/react/-/react-19.2.3.tgz"
   integrity sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==
-
-readdirp@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/readdirp/-/readdirp-5.0.0.tgz"
-  integrity sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==
 
 readdirp@~3.6.0:
   version "3.6.0"
