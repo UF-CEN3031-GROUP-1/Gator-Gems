@@ -3,9 +3,8 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
-import appCss from '../styles.css?url'
 
-import type { QueryClient } from '@tanstack/react-query'
+import appCss from '../styles.css?url'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -37,6 +36,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en">
       <head>
