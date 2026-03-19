@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes import health
 from app.core.logging import setup_logging
@@ -18,7 +19,19 @@ async def lifespan(app: FastAPI):
     yield
 
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+]
+
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(health.router)
 app.include_router(users.router)
+app.add_middleware(
+    CORSMiddleware,  # ty: ignore
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
