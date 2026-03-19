@@ -1,0 +1,30 @@
+set fallback
+
+default:
+    just list
+    just --list
+
+dev:
+	npm run dev
+
+build:
+	npm tsc -b && vite build
+
+generate-types:
+	npm run generate-api-types
+
+lint:
+	npm run lint
+
+format:
+	npm run format
+
+test:
+	npm run test
+
+pre-commit:
+	just generate-types
+	just build
+	just lint
+	just format
+	# add tests
