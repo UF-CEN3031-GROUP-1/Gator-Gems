@@ -16,6 +16,9 @@ from fastapi.security import (
 from jwt.exceptions import InvalidTokenError
 from pwdlib import PasswordHash
 
+# TODO: refactor security into separate file
+# TODO: write unit tests
+# TODO: pre-commit checks
 router = APIRouter()
 security = HTTPBasic()
 password_hash = PasswordHash.recommended()
@@ -69,6 +72,7 @@ def validate_token(token=Depends(bearer_token)):
         )
 
 
+# TODO: you should only be able to delete yourself
 @router.delete(
     "/users/{email_address}",
     description="Delete an existing user",
@@ -90,6 +94,7 @@ def delete_user(
     }
 
 
+# TODO: you should only be able to get information on yourself
 @router.get(
     "/users/{email_address}",
     description="Get user details by email address",
@@ -139,6 +144,7 @@ class Token(BaseModel):
     token_type: str
 
 
+# TODO: email address shou
 @router.get(
     "/users/{email_address}/login",
     description="Login a user",
