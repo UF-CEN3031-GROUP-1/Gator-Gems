@@ -9,6 +9,8 @@ from app.database.connections import get_session
 from app.database.schema import create_db_and_tables
 from tests.mocks.users import MOCK_USER, MOCK_USER_RAW_PASSWORD
 from app.models.users import User
+from fastapi.security import HTTPAuthorizationCredentials
+from app.core.security.jwt_auth import create_access_token
 
 
 @pytest.fixture(name="session", scope="function")
@@ -50,3 +52,11 @@ def user_fixture():
 @pytest.fixture(name="raw_user_password", scope="function")
 def raw_user_password_fixture():
     yield MOCK_USER_RAW_PASSWORD  # Provide the raw password for testing
+
+
+@pytest.fixture(name="jwt", scope="function")
+def jwt_token_fixture(client, user):
+    yield HTTPAuthorizationCredentials(
+        scheme="Bearer",
+        credentials=create_access_token({"sub": user.email_address}).access_token,
+    )

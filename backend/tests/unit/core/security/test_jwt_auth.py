@@ -20,25 +20,22 @@ def test_invalid_token():
     assert error.value.status_code == 401
 
 
-def test_user_emails_do_not_match(session: Session, user: User):
+def test_user_emails_do_not_match(
+    session: Session, user: User, jwt: HTTPAuthorizationCredentials
+):
     session.add(user)
     session.commit()
-
-    jwt = create_access_token({"sub": user.email_address})
-    token = HTTPAuthorizationCredentials(scheme="Bearer", credentials=jwt.access_token)
-
     with pytest.raises(HTTPException) as error:
-        validate_jwt_token(email_address="incorrect-email@test.com", token=token)
+        validate_jwt_token(email_address="incorrect-email@test.com", token=jwt)
     assert isinstance(error.value, HTTPException)
     assert error.value.detail == "Invalid Access."
     assert error.value.status_code == 403
 
 
-def test_user_auth_success(session: Session, user: User):
+def test_user_auth_success(
+    session: Session, user: User, jwt: HTTPAuthorizationCredentials
+):
     session.add(user)
     session.commit()
 
-    jwt = create_access_token({"sub": user.email_address})
-    token = HTTPAuthorizationCredentials(scheme="Bearer", credentials=jwt.access_token)
-
-    assert validate_jwt_token(email_address=user.email_address, token=token) is None
+    assert validate_jwt_token(email_address=user.email_address, token=jwt) is None
