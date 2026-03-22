@@ -24,8 +24,8 @@ generate-docs:
     git diff -s --exit-code openapi.json
 
 pre-commit:
-    just format && \
-    just lint && \
-    just test && \
+    just format
+    just lint
     just type-check
     just generate-docs
+    just test

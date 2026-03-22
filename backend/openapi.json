@@ -74,6 +74,11 @@
                 "summary": "Delete User",
                 "description": "Delete an existing user",
                 "operationId": "delete_user_users__email_address__delete",
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "email_address",
@@ -81,7 +86,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "title": "Email address of the user to delete"
+                            "title": "Email Address"
                         }
                     }
                 ],
@@ -110,6 +115,11 @@
                 "summary": "Get User",
                 "description": "Get user details by email address",
                 "operationId": "get_user_users__email_address__get",
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "email_address",
@@ -117,7 +127,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "title": "Email address of the user to retrieve"
+                            "title": "Email Address"
                         }
                     }
                 ],
@@ -129,6 +139,49 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/User"
                                 }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{email_address}/login": {
+            "get": {
+                "summary": "Login User",
+                "description": "Login a user",
+                "operationId": "login_user_users__email_address__login_get",
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "email_address",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email Address"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
                             }
                         }
                     },
@@ -157,12 +210,17 @@
                     "lastName": {
                         "type": "string",
                         "title": "Lastname"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
                     }
                 },
                 "type": "object",
                 "required": [
                     "firstName",
-                    "lastName"
+                    "lastName",
+                    "password"
                 ],
                 "title": "CreateUser"
             },
@@ -248,6 +306,16 @@
                     "type"
                 ],
                 "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "Authorization": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "HTTPBasic": {
+                "type": "http",
+                "scheme": "basic"
             }
         }
     }
