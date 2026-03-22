@@ -14,6 +14,7 @@ security = HTTPBasic()
 class CreateUser(BaseModel):
     firstName: str
     lastName: str
+    password: str
 
 
 @router.post("/users/{email_address}", description="Create a new user")
@@ -30,6 +31,7 @@ def create_user(
         email_address=email_address,
         first_name=user.firstName,
         last_name=user.lastName,
+        password=user.password,
     )
 
     session.add(db_user)
