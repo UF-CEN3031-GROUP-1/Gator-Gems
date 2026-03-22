@@ -11,6 +11,7 @@ from fastapi.security import (
     HTTPBasicCredentials,
     OAuth2PasswordBearer,
     OAuth2PasswordRequestForm,
+    HTTPBearer,
 )
 from jwt.exceptions import InvalidTokenError
 from pwdlib import PasswordHash
@@ -18,7 +19,7 @@ from pwdlib import PasswordHash
 router = APIRouter()
 security = HTTPBasic()
 password_hash = PasswordHash.recommended()
-
+bearer_token = HTTPBearer(scheme_name="Authorization")
 
 # TODO: genearte secret key
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -57,7 +58,22 @@ def create_user(
     return {"message": f"User with email {db_user.email_address} created successfully."}
 
 
-@router.delete("/users/{email_address}", description="Delete an existing user")
+def validate_token(token=Depends(bearer_token)):
+    try:
+        jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+@router.delete(
+    "/users/{email_address}",
+    description="Delete an existing user",
+    dependencies=[Depends(validate_token)],
+)
 def delete_user(
     email_address: Annotated[str, Path(title="Email address of the user to delete")],
     session: SessionDep,
@@ -78,6 +94,7 @@ def delete_user(
     "/users/{email_address}",
     description="Get user details by email address",
     response_model=User,
+    dependencies=[Depends(validate_token)],
 )
 def get_user(
     email_address: Annotated[str, Path(title="Email address of the user to retrieve")],
