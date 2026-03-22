@@ -1,4 +1,3 @@
-add unit tests for jwt_auth
 update user routes to have auth
 add tests for user auth route
 make secure key environment variable
