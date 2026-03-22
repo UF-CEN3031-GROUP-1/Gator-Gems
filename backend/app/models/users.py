@@ -9,4 +9,4 @@ class User(SQLModel, table=True):
     email_address: EmailStr = Field(..., primary_key=True)
     first_name: str
     last_name: str
-    password: str
+    _password: str
