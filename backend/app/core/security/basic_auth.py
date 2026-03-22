@@ -9,6 +9,17 @@ security = HTTPBasic()
 password_hash = PasswordHash.recommended()
 
 
+def hash_password(password: str) -> str:
+    return password_hash.hash(password)
+
+
+def verify_password(password: str, credentials: HTTPBasicCredentials):
+    try:
+        return password_hash.verify(credentials.password, password)
+    except Exception:
+        return False
+
+
 def validate_basic_auth(
     email_address: str,
     credentials: Annotated[HTTPBasicCredentials, Depends(security)],
@@ -21,7 +32,7 @@ def validate_basic_auth(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
         )
-    if not password_hash.verify(credentials.password, user.password):
+    if not verify_password(user.password, credentials):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -33,7 +44,3 @@ def validate_basic_auth(
             detail="Invalid Access.",
             headers={"WWW-Authenticate": "Bearer"},
         )
-
-
-def hash_password(password: str) -> str:
-    return password_hash.hash(password)

@@ -7,8 +7,8 @@ from fastapi.testclient import TestClient
 
 from app.database.connections import get_session
 from app.database.schema import create_db_and_tables
+from tests.mocks.users import MOCK_USER, MOCK_USER_RAW_PASSWORD
 from app.models.users import User
-from tests.mocks.users import MOCK_USER
 
 
 @pytest.fixture(name="session", scope="function")
@@ -39,4 +39,14 @@ def client_fixture(session):
 
 @pytest.fixture(name="user", scope="function")
 def user_fixture():
-    yield User(**MOCK_USER.model_dump())  # Create a new User instance for each test
+    yield User(
+        email_address=MOCK_USER.email_address,
+        first_name=MOCK_USER.first_name,
+        last_name=MOCK_USER.last_name,
+        password=MOCK_USER.password,
+    )  # Create a new User instance for each test
+
+
+@pytest.fixture(name="raw_user_password", scope="function")
+def raw_user_password_fixture():
+    yield MOCK_USER_RAW_PASSWORD  # Provide the raw password for testing
