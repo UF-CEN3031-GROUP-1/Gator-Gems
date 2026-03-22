@@ -1,13 +1,14 @@
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Depends, status
 from typing import Annotated
-
+import secrets
 from pydantic import BaseModel
 
 from app.database.connections import SessionDep
 from app.models.users import User
-
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 router = APIRouter()
+security = HTTPBasic()
 
 
 class CreateUser(BaseModel):
@@ -69,3 +70,33 @@ def get_user(
         raise HTTPException(status_code=404, detail="User not found")
 
     return user
+
+
+def validate_credentials(
+    credentials: Annotated[HTTPBasicCredentials, Depends(security)],
+):
+    current_username_bytes = credentials.username.encode("utf8")
+    correct_username_bytes = b"stanleyjobson"
+    is_correct_username = secrets.compare_digest(
+        current_username_bytes, correct_username_bytes
+    )
+    current_password_bytes = credentials.password.encode("utf8")
+    correct_password_bytes = b"swordfish"
+    is_correct_password = secrets.compare_digest(
+        current_password_bytes, correct_password_bytes
+    )
+    if not (is_correct_username and is_correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+
+
+@router.get(
+    "/user/login",
+    description="Login a user",
+    dependencies=[Depends(validate_credentials)],
+)
+def login_user():
+    pass
