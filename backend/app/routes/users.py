@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException, Path, Depends, status
 from typing import Annotated
 import secrets
 from pydantic import BaseModel
-
+import jwt
+from datetime import datetime, timedelta, timezone
 from app.database.connections import SessionDep
 from app.models.users import User
 from fastapi.security import (
@@ -108,10 +109,29 @@ def validate_credentials(
         )
 
 
+def create_access_token(data: dict, expires_delta: int | None):
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + timedelta(minutes=expires_delta or 15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
 @router.get(
-    "/user/login",
+    "/users/{email_address}/login",
     description="Login a user",
     dependencies=[Depends(validate_credentials)],
 )
-def login_user():
-    pass
+def login_user(
+    email_address: Annotated[str, Path(title="Email address to login")],
+):
+    access_token = create_access_token(
+        data={"sub": email_address},
+        expires_delta=ACCESS_TOKEN_EXPIRE_MINUTES,
+    )
+    return Token(access_token=access_token, token_type="bearer")
