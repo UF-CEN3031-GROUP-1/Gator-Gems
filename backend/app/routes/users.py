@@ -5,10 +5,24 @@ from pydantic import BaseModel
 
 from app.database.connections import SessionDep
 from app.models.users import User
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import (
+    HTTPBasic,
+    HTTPBasicCredentials,
+    OAuth2PasswordBearer,
+    OAuth2PasswordRequestForm,
+)
+from jwt.exceptions import InvalidTokenError
+from pwdlib import PasswordHash
 
 router = APIRouter()
 security = HTTPBasic()
+password_hash = PasswordHash.recommended()
+
+
+# TODO: genearte secret key
+SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 class CreateUser(BaseModel):
@@ -26,12 +40,13 @@ def create_user(
     existing_user = session.get(User, email_address)
     if existing_user:
         raise HTTPException(status_code=400, detail="User already exists")
+    hashed_password = password_hash.hash(user.password)
 
     db_user = User(
         email_address=email_address,
         first_name=user.firstName,
         last_name=user.lastName,
-        password=user.password,
+        password=hashed_password,
     )
 
     session.add(db_user)
@@ -85,9 +100,7 @@ def validate_credentials(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
         )
-
-    current_password = credentials.password
-    if not user.password == current_password:
+    if not password_hash.verify(credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
