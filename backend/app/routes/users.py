@@ -24,8 +24,8 @@ security = HTTPBasic()
 password_hash = PasswordHash.recommended()
 bearer_token = HTTPBearer(scheme_name="Authorization")
 
-# TODO: genearte secret key
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+# TODO: genearte secret key : DONE : should this be an env variable?
+SECRET_KEY = "b0a593270cdd78965ba8614f317a22d7bd65be15f9b7082d5808f79b927eaf8"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -61,9 +61,17 @@ def create_user(
     return {"message": f"User with email {db_user.email_address} created successfully."}
 
 
-def validate_token(token=Depends(bearer_token)):
+def validate_jwt_token(email_address: str, token=Depends(bearer_token)):
     try:
-        jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        token = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        username = token["sub"]
+        if not email_address == username:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Invalid Access.",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+
     except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -72,11 +80,10 @@ def validate_token(token=Depends(bearer_token)):
         )
 
 
-# TODO: you should only be able to delete yourself
 @router.delete(
     "/users/{email_address}",
     description="Delete an existing user",
-    dependencies=[Depends(validate_token)],
+    dependencies=[Depends(validate_jwt_token)],
 )
 def delete_user(
     email_address: Annotated[str, Path(title="Email address of the user to delete")],
@@ -94,12 +101,11 @@ def delete_user(
     }
 
 
-# TODO: you should only be able to get information on yourself
 @router.get(
     "/users/{email_address}",
     description="Get user details by email address",
     response_model=User,
-    dependencies=[Depends(validate_token)],
+    dependencies=[Depends(validate_jwt_token)],
 )
 def get_user(
     email_address: Annotated[str, Path(title="Email address of the user to retrieve")],
@@ -112,8 +118,10 @@ def get_user(
     return user
 
 
-def validate_credentials(
-    credentials: Annotated[HTTPBasicCredentials, Depends(security)], session: SessionDep
+def validate_basic_auth(
+    email_address: str,
+    credentials: Annotated[HTTPBasicCredentials, Depends(security)],
+    session: SessionDep,
 ):
     current_username = credentials.username
     user = session.get(User, current_username)
@@ -128,6 +136,12 @@ def validate_credentials(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
+        )
+    if not credentials.username == email_address:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid Access.",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
 
@@ -144,11 +158,10 @@ class Token(BaseModel):
     token_type: str
 
 
-# TODO: email address shou
 @router.get(
     "/users/{email_address}/login",
     description="Login a user",
-    dependencies=[Depends(validate_credentials)],
+    dependencies=[Depends(validate_basic_auth)],
 )
 def login_user(
     email_address: Annotated[str, Path(title="Email address to login")],
