@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlmodel import Session
 
-from app.core.security.jwt_auth import validate_jwt_token, create_access_token
+from app.core.security.jwt_auth import validate_jwt_token
 from app.models.users import User
 
 
