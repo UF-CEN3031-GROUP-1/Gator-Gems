@@ -1,6 +1,6 @@
-from fastapi import APIRouter
 import logging
 
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 router = APIRouter()

@@ -1,9 +1,10 @@
 import pytest
-from sqlmodel import Session
 from fastapi import HTTPException
+from fastapi.security import HTTPBasicCredentials
+from sqlmodel import Session
+
 from app.core.security.basic_auth import validate_basic_auth, verify_password
 from app.models.users import User
-from fastapi.security import HTTPBasicCredentials
 
 
 def test_user_does_not_exist(session: Session):

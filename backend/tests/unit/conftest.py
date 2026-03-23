@@ -1,19 +1,18 @@
-import pytest
-
-from sqlmodel import StaticPool, create_engine, Session
-
-from app.main import app
-from fastapi.testclient import TestClient
-
-from app.database.connections import get_session
-from app.database.schema import create_db_and_tables
-from fastapi.security import HTTPAuthorizationCredentials
-from app.core.security.jwt_auth import create_access_token
+import base64
 import os
 from unittest import mock
+
+import pytest
+from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.testclient import TestClient
+from sqlmodel import Session, StaticPool, create_engine
+
 from app.core.security.basic_auth import hash_password
+from app.core.security.jwt_auth import create_access_token
+from app.database.connections import get_session
+from app.database.schema import create_db_and_tables
+from app.main import app
 from app.models.users import User
-import base64
 
 MOCK_USER_RAW_PASSWORD = "mockpassword"
 

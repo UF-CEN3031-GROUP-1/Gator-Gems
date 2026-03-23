@@ -1,10 +1,12 @@
+import os
+from typing import Annotated
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pwdlib import PasswordHash
-from app.models.users import User
-from typing import Annotated
+
 from app.database.connections import SessionDep
-import os
+from app.models.users import User
 
 security = HTTPBasic()
 password_hash = PasswordHash.recommended()

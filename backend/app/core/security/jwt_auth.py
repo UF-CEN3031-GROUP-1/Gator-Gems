@@ -1,13 +1,15 @@
+from datetime import datetime, timedelta, timezone
+
+import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer
-import jwt
 from jwt import InvalidTokenError
-from datetime import datetime, timedelta, timezone
 from pydantic import BaseModel
+
 from app.core.security.constants import (
-    SECRET_KEY,
     ACCESS_TOKEN_EXPIRE_MINUTES,
     ALGORITHM,
+    SECRET_KEY,
 )
 
 bearer_token = HTTPBearer(scheme_name="Authorization")

@@ -1,14 +1,15 @@
-from fastapi import APIRouter, HTTPException, Path, Depends
 from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Path
 from pydantic import BaseModel
+
+from app.core.security.basic_auth import hash_password, validate_basic_auth
+from app.core.security.jwt_auth import (
+    create_access_token,
+    validate_jwt_token,
+)
 from app.database.connections import SessionDep
 from app.models.users import User
-
-from app.core.security.jwt_auth import (
-    validate_jwt_token,
-    create_access_token,
-)
-from app.core.security.basic_auth import validate_basic_auth, hash_password
 
 router = APIRouter()
 

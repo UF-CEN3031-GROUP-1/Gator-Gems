@@ -1,8 +1,8 @@
-from fastapi.testclient import TestClient
-
-from sqlmodel import Session
-from app.models.users import User
 from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.testclient import TestClient
+from sqlmodel import Session
+
+from app.models.users import User
 
 
 def test_create_user_success(
