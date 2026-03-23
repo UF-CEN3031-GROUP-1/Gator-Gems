@@ -18,6 +18,14 @@ repos:
       types_or: [python, pyi, jupyter]
       pass_filenames: false
       require_serial: true
+    - id: sort-import
+      name: sort imports
+      description: "Run 'ruff check --select I --fix' to sort imports"
+      entry: just backend sort-imports
+      language: system
+      types_or: [python, pyi, jupyter]
+      pass_filenames: false
+      require_serial: true
     - id: ty
       name: ty check
       description: "Run 'ty check' for Python type checking"
@@ -40,5 +48,38 @@ repos:
       entry: just backend generate-docs
       language: system
       types_or: [python, pyi, jupyter]
+      pass_filenames: false
+      require_serial: true
+    # Frontend JavaScript hooks
+    - id: openapi-typescript
+      name: openapi-typescript
+      description: "Updates TypeScript types from OpenAPI spec"
+      entry: just frontend generate-types
+      language: system
+      types_or: [ts, tsx]
+      pass_filenames: false
+      require_serial: true
+    - id: prettier
+      name: prettier
+      description: "Run 'prettier' for JavaScript formatting"
+      entry: just frontend format
+      language: system
+      types_or: [ts, tsx, jsx]
+      pass_filenames: false
+      require_serial: true
+    - id: eslint
+      name: eslint
+      description: "Run 'eslint' for JavaScript linting"
+      entry: just frontend lint
+      language: system
+      types_or: [ts, tsx, jsx]
+      pass_filenames: false
+      require_serial: true
+    - id: build
+      name: build
+      description: "Run 'npm tsc -b && vite build' to build the frontend"
+      entry: just frontend build
+      language: system
+      types_or: [ts, tsx, jsx]
       pass_filenames: false
       require_serial: true

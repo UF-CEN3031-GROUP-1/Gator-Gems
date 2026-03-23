@@ -1,14 +1,11 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import health
 from app.core.logging import setup_logging
 from app.database.schema import create_db_and_tables
-
-from contextlib import asynccontextmanager
-
-from app.routes import users
-
+from app.routes import health, users
 
 setup_logging()
 

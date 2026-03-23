@@ -13,6 +13,9 @@ test:
 lint:
     uv run ruff check
 
+sort-imports:
+    uv run ruff check --select I --fix
+
 format:
     uv run ruff format
 
@@ -24,8 +27,9 @@ generate-docs:
     git diff -s --exit-code openapi.json
 
 pre-commit:
-    just format && \
-    just lint && \
-    just test && \
+    just format
+    just lint
+    just sort-imports
     just type-check
     just generate-docs
+    just test
