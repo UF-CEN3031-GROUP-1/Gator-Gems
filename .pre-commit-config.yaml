@@ -18,6 +18,14 @@ repos:
       types_or: [python, pyi, jupyter]
       pass_filenames: false
       require_serial: true
+    - id: sort-import
+      name: sort imports
+      description: "Run 'ruff check --select I --fix' to sort imports"
+      entry: just backend sort-imports
+      language: system
+      types_or: [python, pyi, jupyter]
+      pass_filenames: false
+      require_serial: true
     - id: ty
       name: ty check
       description: "Run 'ty check' for Python type checking"
