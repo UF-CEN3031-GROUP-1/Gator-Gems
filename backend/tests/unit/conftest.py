@@ -13,6 +13,7 @@ import os
 from unittest import mock
 from app.core.security.basic_auth import hash_password
 from app.models.users import User
+import base64
 
 MOCK_USER_RAW_PASSWORD = "mockpassword"
 
@@ -70,4 +71,15 @@ def jwt_token_fixture(client, user):
     yield HTTPAuthorizationCredentials(
         scheme="Bearer",
         credentials=create_access_token({"sub": user.email_address}).access_token,
+    )
+
+
+@pytest.fixture(name="basic_auth", scope="function")
+def basic_auth_fixture(user, raw_user_password):
+    b64_credentials = base64.b64encode(
+        f"{user.email_address}:{raw_user_password}".encode()
+    )
+    yield HTTPAuthorizationCredentials(
+        scheme="Basic",
+        credentials=b64_credentials.decode("utf-8"),
     )

@@ -114,3 +114,25 @@ def test_get_user_not_found(
     # Verify
     assert response.status_code == 404
     assert response.json() == {"detail": "User not found"}
+
+
+def test_login_user_success(
+    session: Session,
+    client: TestClient,
+    user: User,
+    jwt: HTTPAuthorizationCredentials,
+    basic_auth: HTTPAuthorizationCredentials,
+):
+    # Setup
+    session.add(user)
+    session.commit()
+
+    # Act
+    response = client.get(
+        f"/users/{user.email_address}/login",
+        headers={"Authorization": f"Basic {basic_auth.credentials}"},
+    )
+
+    # Verify
+    assert response.status_code == 200
+    assert response.json()["access_token"] == jwt.credentials
