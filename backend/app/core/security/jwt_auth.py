@@ -28,14 +28,12 @@ def validate_jwt_token(email_address: str, token=Depends(bearer_token)):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Invalid Access.",
-                headers={"WWW-Authenticate": "Bearer"},
             )
 
     except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
         )
 
 
