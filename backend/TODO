@@ -1,2 +1,0 @@
-make secure key environment variable
-precommit updated, but now its not passing because newPage code is bad, fix newPage code
