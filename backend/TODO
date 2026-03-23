@@ -1,1 +1,2 @@
 make secure key environment variable
+add pre-commit hooks for generating frontend types
