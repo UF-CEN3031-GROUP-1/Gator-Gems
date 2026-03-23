@@ -10,8 +10,6 @@ from app.core.security.jwt_auth import (
 )
 from app.core.security.basic_auth import validate_basic_auth, hash_password
 
-# TODO: write unit tests
-# TODO: pre-commit checks
 router = APIRouter()
 
 
