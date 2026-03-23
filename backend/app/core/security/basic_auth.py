@@ -4,13 +4,21 @@ from pwdlib import PasswordHash
 from app.models.users import User
 from typing import Annotated
 from app.database.connections import SessionDep
+import os
 
 security = HTTPBasic()
 password_hash = PasswordHash.recommended()
 
 
+def get_password_salt():
+    salt = os.environ.get("PASSWORD_SALT")
+    if not salt:
+        return None
+    return salt.encode()
+
+
 def hash_password(password: str) -> str:
-    return password_hash.hash(password)
+    return password_hash.hash(password, salt=get_password_salt())
 
 
 def verify_password(password: str, credentials: HTTPBasicCredentials):
