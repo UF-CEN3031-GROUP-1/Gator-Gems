@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
 import createClient from 'openapi-fetch'
-import type { paths } from '../types/api'
 import { useState } from 'react'
 import gatorBg from 'public/GainesvilleDownTown.jpg'
+import type { paths } from '../types/api'
 
 export const Route = createFileRoute('/signup')({ component: App })
 
@@ -28,17 +28,14 @@ function App() {
       lastName: string
       password: string
     }) => {
-      const { data, response } = await client.POST(
-        '/users/{email_address}',
-        {
-          params: { path: { email_address: userData.email } },
-          body: {
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            password: userData.password,
-          },
-        }
-      )
+      const { data, response } = await client.POST('/users/{email_address}', {
+        params: { path: { email_address: userData.email } },
+        body: {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          password: userData.password,
+        },
+      })
 
       if (!response.ok) {
         throw new Error('Signup failed')
@@ -158,10 +155,7 @@ function App() {
         <div className="mt-4 text-center text-sm">
           <p>
             Already have an account?{' '}
-            <a
-              href="/login"
-              className="hover:underline font-semibold"
-            >
+            <a href="/login" className="hover:underline font-semibold">
               Login
             </a>
           </p>

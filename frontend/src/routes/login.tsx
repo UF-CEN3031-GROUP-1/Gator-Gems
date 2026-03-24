@@ -22,10 +22,10 @@ function App() {
         {
           method: 'GET',
           headers: {
-            'Authorization': `Basic ${basicAuth}`,
+            Authorization: `Basic ${basicAuth}`,
             'Content-Type': 'application/json',
           },
-        }
+        },
       )
 
       if (!response.ok) {
@@ -42,7 +42,7 @@ function App() {
       // Store user data in localStorage (optional)
       localStorage.setItem('user', JSON.stringify(data))
       localStorage.setItem('auth', btoa(`${email}:${password}`)) // Store encoded credentials
-      
+
       // Navigate to home page
       navigate({ to: '/' })
     },
@@ -96,7 +96,10 @@ function App() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-xs mb-1 font-semibold">
+            <label
+              htmlFor="password"
+              className="block text-xs mb-1 font-semibold"
+            >
               Password
             </label>
             <input
@@ -124,10 +127,7 @@ function App() {
         <div className="mt-4 text-center text-sm">
           <p className="text-gray-600 dark:text-gray-300">
             Don't have an account?{' '}
-            <a
-              href="/signup"
-              className="hover:underline font-semibold"
-            >
+            <a href="/signup" className="hover:underline font-semibold">
               Sign up
             </a>
           </p>
