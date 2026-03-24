@@ -56,7 +56,7 @@ repos:
       description: "Updates TypeScript types from OpenAPI spec"
       entry: just frontend generate-types
       language: system
-      types_or: [ts, tsx]
+      types_or: [json]
       pass_filenames: false
       require_serial: true
     - id: prettier

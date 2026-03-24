@@ -4,5 +4,5 @@ __pycache__
 .coverage
 .ruff_cache
 *.db
-
+frontend/tsconfig.tsbuildinfo
 node_modules

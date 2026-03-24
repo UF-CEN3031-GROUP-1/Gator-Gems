@@ -1,3 +1,4 @@
+set shell := ["bash", "-cu"]
 set fallback
 
 default:
