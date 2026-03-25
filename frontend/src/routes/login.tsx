@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import gatorBg from 'public/GainesvilleDownTown.jpg'
+import gatorBg from '/GainesvilleDownTown.jpg'
 
 export const Route = createFileRoute('/login')({ component: App })
 

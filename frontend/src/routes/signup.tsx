@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
 import createClient from 'openapi-fetch'
 import { useState } from 'react'
-import gatorBg from 'public/GainesvilleDownTown.jpg'
+import gatorBg from '/GainesvilleDownTown.jpg'
 import type { paths } from '../types/api'
 
 export const Route = createFileRoute('/signup')({ component: App })
