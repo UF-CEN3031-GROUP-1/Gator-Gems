@@ -11,14 +11,6 @@ function App() {
       style={{ backgroundImage: `url(${gatorBg})` }}
     >
       <LoginForm />
-      <div className="mt-4 text-center text-sm">
-        <p className="text-gray-600 dark:text-gray-300">
-          Don't have an account?{' '}
-          <a href="/signup" className="hover:underline font-semibold">
-            Sign up
-          </a>
-        </p>
-      </div>
     </div>
   )
 }
