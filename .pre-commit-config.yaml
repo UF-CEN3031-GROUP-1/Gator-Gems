@@ -83,3 +83,11 @@ repos:
       types_or: [ts, tsx, jsx]
       pass_filenames: false
       require_serial: true
+    - id: test
+      name: test
+      description: "Run 'vitest' for JavaScript unit testing"
+      entry: just frontend test
+      language: system
+      types_or: [ts, tsx, jsx]
+      pass_filenames: false
+      require_serial: true
