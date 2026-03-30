@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Path
+from fastapi import APIRouter, Depends, HTTPException, Path, Response
 from pydantic import BaseModel
 
 from app.core.security.basic_auth import hash_password, validate_basic_auth
@@ -89,5 +89,18 @@ def get_user(
 )
 def login_user(
     email_address: Annotated[str, Path(title="Email address to login")],
+    response: Response,
 ):
-    return create_access_token(data={"sub": email_address})
+    token = create_access_token(data={"sub": email_address})
+    response.set_cookie(
+        key="jwt_token",
+        value=token.access_token,
+        httponly=True,
+        secure=False,
+        samesite="lax",
+        max_age=24 * 60 * 60,
+    )  # Set cookie to expire in 24 hours
+    # TODO - set secure=True and samesite='strict' in production
+    return {
+        "message": "Cookie set successfully",
+    }

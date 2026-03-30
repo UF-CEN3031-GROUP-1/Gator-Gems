@@ -135,4 +135,4 @@ def test_login_user_success(
 
     # Verify
     assert response.status_code == 200
-    assert response.json()["access_token"] == jwt.credentials
+    assert response.json()["message"] == "Cookie set successfully"

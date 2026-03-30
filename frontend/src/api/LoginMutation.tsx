@@ -1,48 +1,38 @@
 import { useMutation } from '@tanstack/react-query'
+import createClient from 'openapi-fetch'
 import { useNavigate } from '@tanstack/react-router'
+import type { paths } from '../types/api'
 
 export const useLoginMutation = (
-  email: string,
+  emailAddress: string,
   password: string,
-  setError: (v: string) => void,
+  setError: (error: string) => void,
 ) => {
   const navigate = useNavigate()
-  return useMutation({
-    mutationFn: async (credentials: { email: string; password: string }) => {
-      // Encode credentials to Base64 for Basic Auth
-      const basicAuth = btoa(`${credentials.email}:${credentials.password}`)
+  const client = createClient<paths>({
+    baseUrl: 'http://localhost:8000',
+  })
 
-      const response = await fetch(
-        `http://localhost:8000/users/${encodeURIComponent(credentials.email)}/login`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Basic ${basicAuth}`,
-            'Content-Type': 'application/json',
-          },
+  return useMutation({
+    mutationFn: async () => {
+      const { response } = await client.GET('/users/{email_address}/login', {
+        params: { path: { email_address: emailAddress } },
+        headers: {
+          Authorization: `Basic ${btoa(`${emailAddress}:${password}`)}`,
         },
-      )
+        credentials: 'include',
+      })
 
       if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('Invalid email or password')
-        }
         throw new Error('Login failed')
       }
-
-      const data = await response.json()
-      return data
     },
-    onSuccess: (data) => {
-      // Store user data in localStorage (optional)
-      localStorage.setItem('user', JSON.stringify(data))
-      localStorage.setItem('auth', btoa(`${email}:${password}`)) // Store encoded credentials
-
-      // Navigate to home page
+    onSuccess: () => {
+      setError('')
       navigate({ to: '/' })
     },
-    onError: (err: Error) => {
-      setError(err.message || 'Invalid email or password')
+    onError: () => {
+      setError('Invalid email or password')
     },
   })
 }
