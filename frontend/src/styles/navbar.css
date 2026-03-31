@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+
+body {
+  @apply m-0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.navbar {
+  display: flex;
+  background-position: center;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #005a06;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.navbar-left .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-center .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-center .nav-links li {
+  padding-right: 1;
+}
+
+.navbar-center .nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-center .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-right .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-right .nav-links li {
+  margin-right: 1rem;
+}
+
+.navbar-right .nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-right .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}

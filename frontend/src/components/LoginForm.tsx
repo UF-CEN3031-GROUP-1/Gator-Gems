@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLoginMutation } from '../api/LoginMutation.tsx'
+import '../styles/auth.css'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -10,18 +11,14 @@ export default function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
-    loginMutation.mutate({ email, password })
+    loginMutation.mutate()
   }
 
   return (
-    <div className="dark:bg-gray-800/95 bg-white/95 p-8 rounded-lg shadow-lg max-w-md w-full">
+    <div className="backElement">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
 
-      {error && (
-        <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-2 rounded mb-4 text-sm">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
@@ -35,7 +32,7 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loginMutation.isPending}
-            className="px-3 py-2 w-full rounded-sm border border-gray-300 dark:border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[rgb(2,48,32)]"
+            className="textBox"
             placeholder="your@email.com"
             required
           />
@@ -55,7 +52,7 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={loginMutation.isPending}
-            className="px-3 py-2 w-full rounded-sm border border-gray-300 dark:border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[rgb(2,48,32)]"
+            className="textBox"
             placeholder="••••••••"
             required
           />
@@ -64,7 +61,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loginMutation.isPending}
-          className="w-full bg-[rgb(2,48,32)] text-white rounded-sm py-2 font-black uppercase hover:bg-[rgb(2,48,32)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="button"
         >
           {loginMutation.isPending ? 'Logging in...' : 'Login'}
         </button>

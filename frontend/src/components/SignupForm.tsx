@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSignupMutation } from '../api/SignupMutation.tsx'
+import '../styles/auth.css'
 
 export default function SignupForm() {
   const [email, setEmail] = useState('')
@@ -21,14 +22,10 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="dark:bg-gray-800/95 p-8 rounded-lg shadow-lg max-w-md w-full">
+    <div className="backElement">
       <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
 
-      {error && (
-        <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-2 rounded mb-4">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
@@ -42,7 +39,7 @@ export default function SignupForm() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             disabled={signupMutation.isPending}
-            className="px-2 py-1 w-full rounded-sm border border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50"
+            className="textBox"
             required
           />
         </div>
@@ -58,7 +55,7 @@ export default function SignupForm() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             disabled={signupMutation.isPending}
-            className="px-2 py-1 w-full rounded-sm border border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50"
+            className="textBox"
             required
           />
         </div>
@@ -74,7 +71,7 @@ export default function SignupForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={signupMutation.isPending}
-            className="px-2 py-1 w-full rounded-sm border border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50"
+            className="textBox"
             required
           />
         </div>
@@ -90,7 +87,7 @@ export default function SignupForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={signupMutation.isPending}
-            className="px-2 py-1 w-full rounded-sm border border-gray-500/20 bg-white dark:bg-gray-800 disabled:opacity-50"
+            className="textBox"
             required
           />
         </div>
@@ -98,7 +95,7 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={signupMutation.isPending}
-          className="w-full bg-[rgb(2,48,32)] text-white rounded-sm py-2 font-black uppercase hover:bg-[rgb(2,48,32)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="button"
         >
           {signupMutation.isPending ? 'Creating Account...' : 'Sign Up'}
         </button>

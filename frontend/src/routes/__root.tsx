@@ -4,6 +4,7 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import appCss from '../styles.css?url'
+import { Navbar } from '../components/Navbar'
 import type { QueryClient } from '@tanstack/react-query'
 
 interface MyRouterContext {
@@ -42,6 +43,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <Navbar />
         {children}
         <Scripts />
       </body>
