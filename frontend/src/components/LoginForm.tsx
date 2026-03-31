@@ -11,7 +11,7 @@ export default function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
-    loginMutation.mutate({ email, password })
+    loginMutation.mutate()
   }
 
   return (
