@@ -1,6 +1,6 @@
 import '../styles/navbar.css'
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -28,5 +28,3 @@ const Navbar = () => {
     </nav>
   )
 }
-
-export default Navbar
