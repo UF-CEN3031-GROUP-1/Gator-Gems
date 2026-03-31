@@ -37,65 +37,68 @@ code {
 }
 
 .error {
-    background-color: rgba(239, 68, 68, 0.2);
-    border-width: 1px;
-    border-color: rgb(239 68 68);
-    color: #ef4444;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+  background-color: rgba(239, 68, 68, 0.2);
+  border-width: 1px;
+  border-color: rgb(239 68 68);
+  color: #ef4444;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .textBox {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    width: var(--container-sm);
-    border-radius: var(--radius-sm);
-    border-width: 1px;
-    border-color: rgb(93, 94, 96);
-    background-color: white;
-    background-color: #19222d;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  width: var(--container-sm);
+  border-radius: var(--radius-sm);
+  border-width: 1px;
+  border-color: rgb(93, 94, 96);
+  background-color: white;
+  background-color: #19222d;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .textBox:disabled {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .textBox:focus {
-    outline-style: none;
-    box-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    --tw-ring-color: rgba(2,48,32, var(--tw-ring-opacity));
-    opacity: 0.8;
+  outline-style: none;
+  box-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
+    var(--tw-ring-color);
+  --tw-ring-color: rgba(2, 48, 32, var(--tw-ring-opacity));
+  opacity: 0.8;
 }
 
 .button {
-    width: var(--container-sm);
-    background-color: rgb(2,48,32);
-    color: rgb(186, 186, 186);
-    border-radius: var(--radius-md);
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    text-transform: uppercase;
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-    transition-timing-function: var(--default-transition-timing-function);
-    transition-duration: var(--default-transition-duration); 
+  width: var(--container-sm);
+  background-color: rgb(2, 48, 32);
+  color: rgb(186, 186, 186);
+  border-radius: var(--radius-md);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+  transition-property:
+    color, background-color, border-color, outline-color, text-decoration-color,
+    fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
 }
 
 .button:hover {
-    background-color: rgba(2, 52, 34, 0.9);
-    cursor: pointer;
+  background-color: rgba(2, 52, 34, 0.9);
+  cursor: pointer;
 }
 
 .button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -27,7 +27,6 @@ export default function SignupForm() {
 
       {error && <div className="error">{error}</div>}
 
-
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName" className="block text-xs mb-1">
