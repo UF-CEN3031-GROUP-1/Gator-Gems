@@ -1,42 +1,33 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
-import { createRoute } from '@tanstack/react-router'
-import { TestComponent, renderWithRouter, rootRoute } from '../router-utils'
+import { createMockRoute } from '../mock-routes'
+import { renderWithRouter } from '../router-utils'
+import { LeafletMap } from '../../components/LeafletMap'
 
-describe('Code-Based Route Component Testing', () => {
-  it('should render route component', () => {
-    const testRoute = createRoute({
-      getParentRoute: () => rootRoute,
-      path: '/',
-      component: TestComponent,
-    })
+vi.mock('react-leaflet', () => ({
+  MapContainer: ({ children, ...props }: any) => (
+    <div data-testid="map-container" {...props}>
+      {children}
+    </div>
+  ),
+  Marker: ({ children }: any) => <div data-testid="marker">{children}</div>,
+  Popup: ({ children }: any) => <div data-testid="popup">{children}</div>,
+  TileLayer: () => <div data-testid="tilelayer" />,
+}))
 
-    renderWithRouter(<div />, {
-      routes: [testRoute],
-      initialLocation: '/',
-    })
+vi.mock('leaflet/dist/leaflet.css', () => ({}))
 
-    expect(screen.getByTestId('test-component')).toBeInTheDocument()
-  })
+describe('GemMap Route / LeafletMap', () => {
+  it('renders the map and its children when route is visited', async () => {
+    const route = createMockRoute('/gemMap', LeafletMap)
 
-  it('should render component with props from route context', () => {
-    function ComponentWithContext() {
-      const { title } = Route.useLoaderData()
-      return <div data-testid="context-component">{title}</div>
-    }
+    renderWithRouter(<div />, { routes: [route], initialLocation: '/gemMap' })
 
-    const contextRoute = createRoute({
-      getParentRoute: () => rootRoute,
-      path: '/context',
-      component: ComponentWithContext,
-      loader: () => ({ title: 'From Context' }),
-    })
+    const map = await screen.findByTestId('map-container')
+    expect(map).toBeInTheDocument()
 
-    renderWithRouter(<div />, {
-      routes: [contextRoute],
-      initialLocation: '/context',
-    })
-
-    expect(screen.getByText('From Context')).toBeInTheDocument()
+    expect(screen.getByTestId('marker')).toBeInTheDocument()
+    expect(screen.getByTestId('popup')).toBeInTheDocument()
+    expect(screen.getByTestId('tilelayer')).toBeInTheDocument()
   })
 })

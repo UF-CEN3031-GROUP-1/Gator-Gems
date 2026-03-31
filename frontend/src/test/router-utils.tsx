@@ -11,7 +11,7 @@ import {
 import type { RenderOptions } from '@testing-library/react'
 
 // Create a root route for testing
-const rootRoute = createRootRoute({
+export const rootRoute = createRootRoute({
   component: () => <Outlet />,
 })
 
