@@ -6,8 +6,7 @@ export const Route = createFileRoute('/signup')({ component: App })
 
 function App() {
   return (
-    <div
-      className="backgroundImage">
+    <div className="backgroundImage">
       <SignupForm />
     </div>
   )

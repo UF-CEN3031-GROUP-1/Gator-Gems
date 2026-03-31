@@ -25,11 +25,8 @@ export default function SignupForm() {
     <div className="backElement">
       <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
 
-      {error && (
-        <div className="error">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
+
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>

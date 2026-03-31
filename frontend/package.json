@@ -27,6 +27,7 @@
     "openapi-typescript": "^7.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.2",
     "tailwindcss": "^4.0.6",
     "vite-tsconfig-paths": "^6.0.2"
   },
