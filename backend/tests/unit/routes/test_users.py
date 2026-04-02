@@ -54,11 +54,10 @@ def test_delete_user_success(
     # Setup
     session.add(user)
     session.commit()
-
+    client.cookies.set("jwt_token", jwt.credentials)
     # Act
     response = client.delete(
         "/users/me",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
     )
 
     # Verify
@@ -90,11 +89,11 @@ def test_get_user_success(
     # Setup
     session.add(user)
     session.commit()
+    client.cookies.set("jwt_token", jwt.credentials)
 
     # Act
     response = client.get(
         "/users/me",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
     )
 
     # Verify

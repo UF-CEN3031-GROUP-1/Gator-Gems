@@ -87,12 +87,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "summary": "Delete User",
@@ -107,12 +102,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ]
+                }
             }
         },
         "/users/{email_address}/login": {
@@ -269,10 +259,6 @@
             }
         },
         "securitySchemes": {
-            "Authorization": {
-                "type": "http",
-                "scheme": "bearer"
-            },
             "HTTPBasic": {
                 "type": "http",
                 "scheme": "basic"
