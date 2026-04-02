@@ -4,7 +4,9 @@ import type { paths } from '../types/api'
 
 export function getStoredAuth(): { email: string; token: string } | null {
   const stored = localStorage.getItem('auth')
-  return stored ? (JSON.parse(stored) as { email: string; token: string }) : null
+  return stored
+    ? (JSON.parse(stored) as { email: string; token: string })
+    : null
 }
 
 export const useUserQuery = () => {

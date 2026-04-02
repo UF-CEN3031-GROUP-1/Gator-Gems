@@ -43,3 +43,15 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return JwtToken(access_token=encoded_jwt, token_type="bearer")
+
+
+def get_email_from_token(token=Depends(bearer_token)):
+    try:
+        token = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        return token["sub"]
+
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+        )

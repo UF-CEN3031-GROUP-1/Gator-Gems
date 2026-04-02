@@ -28,11 +28,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * Get User
-         * @description Get user details by email address
-         */
-        get: operations["get_user_users__email_address__get"];
+        get?: never;
         put?: never;
         /**
          * Create User
@@ -44,6 +40,26 @@ export interface paths {
          * @description Delete an existing user
          */
         delete: operations["delete_user_users__email_address__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User
+         * @description Get details of the currently authenticated user
+         */
+        get: operations["get_user_users_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -142,37 +158,6 @@ export interface operations {
             };
         };
     };
-    get_user_users__email_address__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                email_address: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["User"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     create_user_users__email_address__post: {
         parameters: {
             query?: never;
@@ -235,6 +220,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_users_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
                 };
             };
         };
