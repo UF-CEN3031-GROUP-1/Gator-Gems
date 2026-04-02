@@ -35,11 +35,7 @@ export interface paths {
          * @description Create a new user
          */
         post: operations["create_user_users__email_address__post"];
-        /**
-         * Delete User
-         * @description Delete an existing user
-         */
-        delete: operations["delete_user_users__email_address__delete"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -59,7 +55,11 @@ export interface paths {
         get: operations["get_user_users_me_get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete User
+         * @description Delete the currently authenticated user
+         */
+        delete: operations["delete_user_users_me_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -193,37 +193,6 @@ export interface operations {
             };
         };
     };
-    delete_user_users__email_address__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                email_address: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     get_user_users_me_get: {
         parameters: {
             query?: never;
@@ -240,6 +209,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    delete_user_users_me_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };

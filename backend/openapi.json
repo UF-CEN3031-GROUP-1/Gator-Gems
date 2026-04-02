@@ -69,47 +69,6 @@
                         }
                     }
                 }
-            },
-            "delete": {
-                "summary": "Delete User",
-                "description": "Delete an existing user",
-                "operationId": "delete_user_users__email_address__delete",
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "email_address",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Email Address"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/users/me": {
@@ -125,6 +84,26 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/User"
                                 }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete User",
+                "description": "Delete the currently authenticated user",
+                "operationId": "delete_user_users_me_delete",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
                             }
                         }
                     }

@@ -7,7 +7,6 @@ from app.core.security.basic_auth import hash_password, validate_basic_auth
 from app.core.security.jwt_auth import (
     create_access_token,
     get_email_from_token,
-    validate_jwt_token,
 )
 from app.database.connections import SessionDep
 from app.models.users import User
@@ -46,24 +45,22 @@ def create_user(
 
 
 @router.delete(
-    "/users/{email_address}",
-    description="Delete an existing user",
-    dependencies=[Depends(validate_jwt_token)],
+    "/users/me",
+    description="Delete the currently authenticated user",
+    dependencies=[Depends(get_email_from_token)],
 )
 def delete_user(
-    email_address: Annotated[str, Path(title="Email address of the user to delete")],
+    email_address: Annotated[str, Depends(get_email_from_token)],
     session: SessionDep,
 ):
-    existing_user = session.get(User, email_address)
-    if not existing_user:
+    user = session.get(User, email_address)
+    if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    session.delete(existing_user)
+    session.delete(user)
     session.commit()
 
-    return {
-        "message": f"User with email {existing_user.email_address} deleted successfully."
-    }
+    return {"message": f"User with email {user.email_address} deleted successfully."}
 
 
 @router.get(

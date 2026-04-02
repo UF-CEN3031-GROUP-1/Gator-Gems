@@ -57,7 +57,7 @@ def test_delete_user_success(
 
     # Act
     response = client.delete(
-        f"/users/{user.email_address}",
+        "/users/me",
         headers={"Authorization": f"Bearer {jwt.credentials}"},
     )
 
@@ -70,18 +70,18 @@ def test_delete_user_success(
     assert session.get(User, user.email_address) is None
 
 
-def test_delete_user_not_found(
+def test_delete_user_not_authenticated(
     session: Session, client: TestClient, user: User, jwt: HTTPAuthorizationCredentials
 ):
     # Act
     response = client.delete(
-        f"/users/{user.email_address}",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
+        "/users/me",
+        headers={},
     )
 
     # Verify
-    assert response.status_code == 404
-    assert response.json() == {"detail": "User not found"}
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Not authenticated"}
 
 
 def test_get_user_success(
