@@ -15,20 +15,14 @@ export const useLoginMutation = (
 
   return useMutation({
     mutationFn: async () => {
-      const { data, response } = await client.GET('/users/{email_address}/login', {
+      const response = await client.GET('/users/{email_address}/login', {
         params: { path: { email_address: emailAddress } },
         headers: {
           Authorization: `Basic ${btoa(`${emailAddress}:${password}`)}`,
         },
         credentials: 'include',
       })
-
-      if (!response.ok) {
-        throw new Error('Login failed')
-      }
-
-      const loginData = data as { access_token: string }
-      localStorage.setItem('auth', JSON.stringify({ email: emailAddress, token: loginData.access_token }))
+      return response
     },
     onSuccess: () => {
       setError('')

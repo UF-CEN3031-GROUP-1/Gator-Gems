@@ -54,11 +54,10 @@ def test_delete_user_success(
     # Setup
     session.add(user)
     session.commit()
-
+    client.cookies.set("jwt_token", jwt.credentials)
     # Act
     response = client.delete(
-        f"/users/{user.email_address}",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
+        "/users/me",
     )
 
     # Verify
@@ -70,18 +69,18 @@ def test_delete_user_success(
     assert session.get(User, user.email_address) is None
 
 
-def test_delete_user_not_found(
+def test_delete_user_not_authenticated(
     session: Session, client: TestClient, user: User, jwt: HTTPAuthorizationCredentials
 ):
     # Act
     response = client.delete(
-        f"/users/{user.email_address}",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
+        "/users/me",
+        headers={},
     )
 
     # Verify
-    assert response.status_code == 404
-    assert response.json() == {"detail": "User not found"}
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Not authenticated"}
 
 
 def test_get_user_success(
@@ -90,11 +89,11 @@ def test_get_user_success(
     # Setup
     session.add(user)
     session.commit()
+    client.cookies.set("jwt_token", jwt.credentials)
 
     # Act
     response = client.get(
-        f"/users/{user.email_address}",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
+        "/users/me",
     )
 
     # Verify
@@ -102,18 +101,16 @@ def test_get_user_success(
     assert response.json() == user.model_dump(by_alias=True)
 
 
-def test_get_user_not_found(
-    client: TestClient, user: User, jwt: HTTPAuthorizationCredentials
-):
+def test_get_user_not_authenticated(client: TestClient, user: User):
     # Act
     response = client.get(
-        f"/users/{user.email_address}",
-        headers={"Authorization": f"Bearer {jwt.credentials}"},
+        "/users/me",
+        headers={},
     )
 
     # Verify
-    assert response.status_code == 404
-    assert response.json() == {"detail": "User not found"}
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Not authenticated"}
 
 
 def test_login_user_success(
