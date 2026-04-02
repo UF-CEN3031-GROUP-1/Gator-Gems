@@ -102,5 +102,7 @@ def login_user(
     )  # Set cookie to expire in 24 hours
     # TODO - set secure=True and samesite='strict' in production
     return {
-        "message": "Cookie set successfully",
+        "message": "Login successful",
+        "access_token": token.access_token,
+        "token_type": token.token_type,
     }
