@@ -15,21 +15,18 @@ export const useLoginMutation = (
 
   return useMutation({
     mutationFn: async () => {
-      const { response } = await client.GET('/users/{email_address}/login', {
+      const response = await client.GET('/users/{email_address}/login', {
         params: { path: { email_address: emailAddress } },
         headers: {
           Authorization: `Basic ${btoa(`${emailAddress}:${password}`)}`,
         },
         credentials: 'include',
       })
-
-      if (!response.ok) {
-        throw new Error('Login failed')
-      }
+      return response
     },
     onSuccess: () => {
       setError('')
-      navigate({ to: '/' })
+      navigate({ to: '/profile' })
     },
     onError: () => {
       setError('Invalid email or password')

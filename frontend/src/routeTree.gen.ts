@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NewPageRouteImport } from './routes/newPage'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GemMapRouteImport } from './routes/gemMap'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewPageRoute = NewPageRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,22 @@ export interface FileRoutesById {
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gemMap' | '/login' | '/newPage' | '/signup'
+  fullPaths: '/' | '/gemMap' | '/login' | '/newPage' | '/profile' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gemMap' | '/login' | '/newPage' | '/signup'
-  id: '__root__' | '/' | '/gemMap' | '/login' | '/newPage' | '/signup'
+  to: '/' | '/gemMap' | '/login' | '/newPage' | '/profile' | '/signup'
+  id:
+    | '__root__'
+    | '/'
+    | '/gemMap'
+    | '/login'
+    | '/newPage'
+    | '/profile'
+    | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +92,7 @@ export interface RootRouteChildren {
   GemMapRoute: typeof GemMapRoute
   LoginRoute: typeof LoginRoute
   NewPageRoute: typeof NewPageRoute
+  ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -86,6 +103,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/newPage': {
@@ -124,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   GemMapRoute: GemMapRoute,
   LoginRoute: LoginRoute,
   NewPageRoute: NewPageRoute,
+  ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport

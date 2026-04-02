@@ -13,7 +13,7 @@ test:
     uv run pytest -vv
 
 lint:
-    uv run ruff check
+    uv run ruff check --fix
 
 sort-imports:
     uv run ruff check --select I --fix
