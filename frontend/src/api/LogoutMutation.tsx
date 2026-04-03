@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import createClient from 'openapi-fetch'
 import { useNavigate } from '@tanstack/react-router'
 import type { paths } from '../types/api'
@@ -8,6 +8,7 @@ export const useLogoutMutation = (setError: (error: string) => void) => {
   const client = createClient<paths>({
     baseUrl: 'http://localhost:8000',
   })
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async () => {
@@ -21,10 +22,11 @@ export const useLogoutMutation = (setError: (error: string) => void) => {
     },
     onSuccess: () => {
       setError('')
+      queryClient.setQueryData(['user'], null)
       navigate({ to: '/login' })
     },
     onError: () => {
-      setError('Invalid email or password')
+      setError('Logout failed. Please try again.')
     },
   })
 }

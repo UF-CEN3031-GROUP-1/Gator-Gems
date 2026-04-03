@@ -1,9 +1,11 @@
 import '../styles/navbar.css'
 import { useState } from 'react'
 import { useLogoutMutation } from '../api/LogoutMutation'
+import { useUserQuery } from '../api/UserQuery'
 
 export const Navbar = () => {
   const [error, setError] = useState<string | null>(null)
+  const { data: user, isPending, isError } = useUserQuery()
   const logoutMutation = useLogoutMutation(setError)
   const handleClick = () => {
     logoutMutation.mutate()
@@ -22,17 +24,19 @@ export const Navbar = () => {
           </li>
         </ul>
       </div>
-      <div className="navbar-right">
-        <ul className="nav-links">
-          <li>
-            <a href="/login">Login</a>
-          </li>
-          <li>
-            <a href="/signup">Sign Up</a>
-          </li>
-        </ul>
-      </div>
-      <button onClick={handleClick}> Logout </button>
+      {user == null && (
+        <div className="navbar-right">
+          <ul className="nav-links">
+            <li>
+              <a href="/login">Login</a>
+            </li>
+            <li>
+              <a href="/signup">Sign Up</a>
+            </li>
+          </ul>
+        </div>
+      )}
+      {user != null && <button onClick={handleClick}> Logout </button>}
     </nav>
   )
 }
