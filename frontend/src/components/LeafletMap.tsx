@@ -28,7 +28,7 @@ export const LeafletMap = () => {
   }
   const { MapContainer, Marker, Popup, TileLayer } = components
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div style={{ height: '95vh', width: '100%' }}>
       <MapContainer
         center={[29.6516, -82.3248]}
         zoom={13}
