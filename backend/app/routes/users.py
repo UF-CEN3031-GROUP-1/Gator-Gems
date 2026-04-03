@@ -101,3 +101,12 @@ def login_user(
     return {
         "message": "Cookie set successfully",
     }
+
+
+@router.get(
+    "/users/logout",
+    description="Logout the currently authenticated user",
+)
+def logout_user(response: Response):
+    response.delete_cookie(key="jwt_token")
+    return {"message": "Logged out successfully"}

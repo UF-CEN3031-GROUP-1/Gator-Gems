@@ -1,6 +1,13 @@
 import '../styles/navbar.css'
+import { useState } from 'react'
+import { useLogoutMutation } from '../api/LogoutMutation'
 
 export const Navbar = () => {
+  const [error, setError] = useState<string | null>(null)
+  const logoutMutation = useLogoutMutation(setError)
+  const handleClick = () => {
+    logoutMutation.mutate()
+  }
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -25,6 +32,7 @@ export const Navbar = () => {
           </li>
         </ul>
       </div>
+      <button onClick={handleClick}> Logout </button>
     </nav>
   )
 }

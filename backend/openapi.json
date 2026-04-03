@@ -147,6 +147,23 @@
                     }
                 }
             }
+        },
+        "/users/logout": {
+            "get": {
+                "summary": "Logout User",
+                "description": "Logout the currently authenticated user",
+                "operationId": "logout_user_users_logout_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
