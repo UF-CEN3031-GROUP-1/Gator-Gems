@@ -1,4 +1,16 @@
 import { useEffect, useState } from 'react'
+import { OpenStreetMapProvider } from 'leaflet-geosearch'
+import SearchControl from './Search'
+import 'leaflet/dist/leaflet.css'
+
+const provider = new OpenStreetMapProvider({
+  params: {
+    viewbox: '-82.4418,29.5988,-82.2458,29.7268',
+    bounded: 1,
+    countrycodes: 'us',
+    'accept-language': 'en',
+  },
+})
 
 export const LeafletMap = () => {
   const [components, setComponents] = useState<{
@@ -27,6 +39,7 @@ export const LeafletMap = () => {
     return null
   }
   const { MapContainer, Marker, Popup, TileLayer } = components
+
   return (
     <div style={{ height: '95vh', width: '100%' }}>
       <MapContainer
@@ -44,6 +57,7 @@ export const LeafletMap = () => {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+        <SearchControl provider={provider} />
       </MapContainer>
     </div>
   )
