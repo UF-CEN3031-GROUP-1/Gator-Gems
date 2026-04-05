@@ -29,11 +29,19 @@ export const useSignupMutation = (setError: (v: string) => void) => {
         throw new Error('Signup failed')
       }
 
+      client.GET('/users/{email_address}/login', {
+        params: { path: { email_address: userData.email } },
+        headers: {
+          Authorization: `Basic ${btoa(`${userData.email}:${userData.password}`)}`,
+        },
+        credentials: 'include',
+      })
+
       return data
     },
     onSuccess: () => {
       // Navigate to login page after successful signup
-      navigate({ to: '/login' })
+      navigate({ to: '/profile' })
     },
     onError: (err) => {
       setError('Failed to create account. User may already exist.')
