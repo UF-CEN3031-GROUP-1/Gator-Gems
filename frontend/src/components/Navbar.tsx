@@ -1,6 +1,6 @@
 import '../styles/navbar.css'
 import { useState } from 'react'
-import { useLocation } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 import { useLogoutMutation } from '../api/LogoutMutation'
 import { useUserQuery } from '../api/UserQuery'
 
@@ -12,55 +12,43 @@ export const Navbar = () => {
     logoutMutation.mutate()
   }
   const location = useLocation({ select: (location) => location.pathname })
-
-  const displayNavbarButtons = () => {
-    if (
-      location === '/login' ||
-      location === '/signup' ||
-      (!user && !isPending)
-    ) {
-      return 'loginsignup'
-    } else if (user) {
-      return 'profilelogout'
-    }
-  }
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <a href="/" className="logo">
+        <Link to="/" className="logo">
           Gator Gems
-        </a>
+        </Link>
       </div>
       <div className="navbar-center">
         <ul className="nav-links">
           <li>
-            <a href="/gemMap">Gem Map</a>
+            <Link to="/gemMap">Gem Map</Link>
           </li>
         </ul>
       </div>
 
       <div className="navbar-right">
         <ul className="nav-links">
-          {displayNavbarButtons() == 'loginsignup' && (
+          {(location === '/login' || location === '/signup' || !user) && (
             <>
               <li>
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <a href="/signup">Sign Up</a>
+                <Link to="/signup">Sign Up</Link>
               </li>
             </>
           )}
-          {displayNavbarButtons() == 'profilelogout' && (
+          {user && (
             <>
               <li>
-                <a href="/profile"> Profile </a>
+                <Link to="/profile"> Profile </Link>
               </li>
               <li>
-                <a href="/login" onClick={handleClick}>
+                <Link to="/login" onClick={handleClick}>
                   {' '}
                   Logout{' '}
-                </a>
+                </Link>
               </li>
             </>
           )}
