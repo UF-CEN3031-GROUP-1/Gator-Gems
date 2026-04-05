@@ -1,40 +1,45 @@
-import { useUserQuery } from '../api/UserQuery'
-import MediaCard from './ListCard'
 import Stack from '@mui/material/Stack'
 import Container from '@mui/material/Container'
+import { useUserQuery } from '../api/UserQuery'
+import MediaCard from './ListCard'
 
 export default function ProfileCard() {
   const cardData = [
     {
       image: '/GainesvilleDownTown.jpg',
       title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description: 'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap'
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
     },
     {
       image: '/GainesvilleDownTown.jpg',
       title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description: 'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap'
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
     },
     {
       image: '/GainesvilleDownTown.jpg',
       title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description: 'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap'
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
     },
     {
       image: '/GainesvilleDownTown.jpg',
       title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description: 'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap'
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
     },
     {
       image: '/GainesvilleDownTown.jpg',
       title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description: 'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap'
-    }
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
   ]
   const { data: user, isPending, isError } = useUserQuery()
 
@@ -110,7 +115,7 @@ export default function ProfileCard() {
               spacing={2}
               sx={{
                 overflowX: 'auto',
-                py: 2.5
+                py: 2.5,
               }}
             >
               {cardData.map((card) => (
