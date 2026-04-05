@@ -20,15 +20,9 @@ code {
   justify-content: space-between;
   align-items: center;
   background-color: #005a06;
-  color: #fff;
   padding: 1rem;
-  border-radius: 1rem;
-  width: 99%;
-  margin-left: auto;
-  margin-right: auto;
   opacity: 0.9;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height: 5vh;
 }
 
 .navbar-left .logo {

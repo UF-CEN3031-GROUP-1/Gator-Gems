@@ -22,6 +22,9 @@ export const useLoginMutation = (
         },
         credentials: 'include',
       })
+      if (!response.response.ok) {
+        throw new Error('Invalid email or password')
+      }
       return response
     },
     onSuccess: () => {
