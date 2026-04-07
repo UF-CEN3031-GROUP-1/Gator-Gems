@@ -1,6 +1,46 @@
+import Stack from '@mui/material/Stack'
+import Container from '@mui/material/Container'
 import { useUserQuery } from '../api/UserQuery'
+import MediaCard from './ListCard'
 
 export default function ProfileCard() {
+  const cardData = [
+    {
+      image: '/GainesvilleDownTown.jpg',
+      title: 'THE GREATEST GEM IN THE UNIVERSE',
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
+    {
+      image: '/GainesvilleDownTown.jpg',
+      title: 'THE GREATEST GEM IN THE UNIVERSE',
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
+    {
+      image: '/GainesvilleDownTown.jpg',
+      title: 'THE GREATEST GEM IN THE UNIVERSE',
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
+    {
+      image: '/GainesvilleDownTown.jpg',
+      title: 'THE GREATEST GEM IN THE UNIVERSE',
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
+    {
+      image: '/GainesvilleDownTown.jpg',
+      title: 'THE GREATEST GEM IN THE UNIVERSE',
+      description:
+        'Why do you need a description when you got the greatest gem in the universe?',
+      buttonUrl: '/gemMap',
+    },
+  ]
   const { data: user, isPending, isError } = useUserQuery()
 
   if (isPending) {
@@ -67,11 +107,27 @@ export default function ProfileCard() {
         </div>
 
         {/* Placeholder: My Gems */}
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 border-dashed opacity-60">
+        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
           <h2 className="text-lg font-semibold mb-2">My Gems</h2>
-          <p className="text-gray-500 text-sm">
-            Coming soon — your saved gems will appear here.
-          </p>
+          <Container maxWidth="lg" sx={{ py: 2 }}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                overflowX: 'auto',
+                py: 2.5,
+              }}
+            >
+              {cardData.map((card) => (
+                <MediaCard
+                  image={card.image}
+                  title={card.title}
+                  description={card.description}
+                  buttonUrl={card.buttonUrl}
+                />
+              ))}
+            </Stack>
+          </Container>
         </div>
 
         {/* Placeholder: Activity */}
