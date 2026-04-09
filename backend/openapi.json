@@ -165,31 +165,20 @@
                 }
             }
         },
-        "/reviews/{id}": {
+        "/reviews": {
             "post": {
                 "summary": "Create Review",
                 "description": "Create a new review",
-                "operationId": "create_review_reviews__id__post",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "ID of the review to create"
-                        }
-                    }
-                ],
+                "operationId": "create_review_reviews_post",
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/CreateReview"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -218,10 +207,6 @@
         "schemas": {
             "CreateReview": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "title": "Id"
-                    },
                     "stars": {
                         "type": "integer",
                         "title": "Stars"
@@ -237,26 +222,14 @@
                     "location_id": {
                         "type": "string",
                         "title": "Location Id"
-                    },
-                    "created_by": {
-                        "type": "string",
-                        "title": "Created By"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "Created At"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "id",
                     "stars",
                     "notes",
                     "visit_again",
-                    "location_id",
-                    "created_by",
-                    "created_at"
+                    "location_id"
                 ],
                 "title": "CreateReview"
             },

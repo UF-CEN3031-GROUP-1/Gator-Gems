@@ -105,7 +105,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reviews/{id}": {
+    "/reviews": {
         parameters: {
             query?: never;
             header?: never;
@@ -118,7 +118,7 @@ export interface paths {
          * Create Review
          * @description Create a new review
          */
-        post: operations["create_review_reviews__id__post"];
+        post: operations["create_review_reviews_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -131,8 +131,6 @@ export interface components {
     schemas: {
         /** CreateReview */
         CreateReview: {
-            /** Id */
-            id: number;
             /** Stars */
             stars: number;
             /** Notes */
@@ -141,13 +139,6 @@ export interface components {
             visit_again: boolean;
             /** Location Id */
             location_id: string;
-            /** Created By */
-            created_by: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
         };
         /** CreateUser */
         CreateUser: {
@@ -344,13 +335,11 @@ export interface operations {
             };
         };
     };
-    create_review_reviews__id__post: {
+    create_review_reviews_post: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: number;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
