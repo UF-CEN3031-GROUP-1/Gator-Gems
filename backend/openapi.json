@@ -164,10 +164,102 @@
                     }
                 }
             }
+        },
+        "/reviews/{id}": {
+            "post": {
+                "summary": "Create Review",
+                "description": "Create a new review",
+                "operationId": "create_review_reviews__id__post",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "ID of the review to create"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateReview"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "CreateReview": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "stars": {
+                        "type": "integer",
+                        "title": "Stars"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "title": "Notes"
+                    },
+                    "visit_again": {
+                        "type": "boolean",
+                        "title": "Visit Again"
+                    },
+                    "location_id": {
+                        "type": "string",
+                        "title": "Location Id"
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "title": "Created By"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "stars",
+                    "notes",
+                    "visit_again",
+                    "location_id",
+                    "created_by",
+                    "created_at"
+                ],
+                "title": "CreateReview"
+            },
             "CreateUser": {
                 "properties": {
                     "firstName": {
