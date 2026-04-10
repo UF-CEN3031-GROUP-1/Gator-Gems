@@ -7,6 +7,9 @@
     "paths": {
         "/health": {
             "get": {
+                "tags": [
+                    "health"
+                ],
                 "summary": "Health Check",
                 "operationId": "health_check_health_get",
                 "responses": {
@@ -25,6 +28,9 @@
         },
         "/users/{email_address}": {
             "post": {
+                "tags": [
+                    "users"
+                ],
                 "summary": "Create User",
                 "description": "Create a new user",
                 "operationId": "create_user_users__email_address__post",
@@ -73,6 +79,9 @@
         },
         "/users/me": {
             "get": {
+                "tags": [
+                    "users"
+                ],
                 "summary": "Get User",
                 "description": "Get details of the currently authenticated user",
                 "operationId": "get_user_users_me_get",
@@ -90,6 +99,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "users"
+                ],
                 "summary": "Delete User",
                 "description": "Delete the currently authenticated user",
                 "operationId": "delete_user_users_me_delete",
@@ -107,6 +119,9 @@
         },
         "/users/{email_address}/login": {
             "get": {
+                "tags": [
+                    "users"
+                ],
                 "summary": "Login User",
                 "description": "Login a user",
                 "operationId": "login_user_users__email_address__login_get",
@@ -150,6 +165,9 @@
         },
         "/users/logout": {
             "get": {
+                "tags": [
+                    "users"
+                ],
                 "summary": "Logout User",
                 "description": "Logout the currently authenticated user",
                 "operationId": "logout_user_users_logout_get",
@@ -164,10 +182,168 @@
                     }
                 }
             }
+        },
+        "/reviews": {
+            "post": {
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Create Review",
+                "description": "Create a new review",
+                "operationId": "create_review_reviews_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateReview"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reviews/{review_id}": {
+            "put": {
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Update Review",
+                "description": "Update an existing review",
+                "operationId": "update_review_reviews__review_id__put",
+                "parameters": [
+                    {
+                        "name": "review_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Review Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateReview"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Delete Review",
+                "description": "Delete an existing review",
+                "operationId": "delete_review_reviews__review_id__delete",
+                "parameters": [
+                    {
+                        "name": "review_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Review Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "CreateReview": {
+                "properties": {
+                    "stars": {
+                        "type": "integer",
+                        "title": "Stars"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "title": "Notes"
+                    },
+                    "visit_again": {
+                        "type": "boolean",
+                        "title": "Visit Again"
+                    },
+                    "location_name": {
+                        "type": "string",
+                        "title": "Location Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "stars",
+                    "notes",
+                    "visit_again",
+                    "location_name"
+                ],
+                "title": "CreateReview"
+            },
             "CreateUser": {
                 "properties": {
                     "firstName": {
@@ -216,6 +392,45 @@
                     "status"
                 ],
                 "title": "HealthCheckAPIResponse"
+            },
+            "UpdateReview": {
+                "properties": {
+                    "stars": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Stars"
+                    },
+                    "notes": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Notes"
+                    },
+                    "visit_again": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Visit Again"
+                    }
+                },
+                "type": "object",
+                "title": "UpdateReview"
             },
             "User": {
                 "properties": {

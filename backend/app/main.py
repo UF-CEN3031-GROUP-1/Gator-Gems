@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.logging import setup_logging
 from app.database.schema import create_db_and_tables
-from app.routes import health, users
+from app.routes import health, reviews, users
 
 setup_logging()
 
@@ -25,6 +25,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(health.router)
 app.include_router(users.router)
+app.include_router(reviews.router)
 app.add_middleware(
     CORSMiddleware,  # ty: ignore
     allow_origins=origins,
