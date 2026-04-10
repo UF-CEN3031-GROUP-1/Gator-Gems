@@ -12,6 +12,7 @@ class Review(SQLModel, table=True):
     stars: int = PydanticField(ge=1, le=10)
     notes: str
     visit_again: bool
+    address: str
     location_id: str
     created_by: EmailStr = Field(foreign_key="user.email_address")
     created_at: datetime = Field(default_factory=datetime.now)

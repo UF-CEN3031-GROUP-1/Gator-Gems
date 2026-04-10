@@ -4,6 +4,7 @@ from typing import Annotated, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
+from app.core.locations import get_location_id
 from app.core.security.jwt_auth import get_email_from_token
 from app.database.connections import SessionDep
 from app.models.reviews import Review
@@ -15,7 +16,7 @@ class CreateReview(BaseModel):
     stars: int
     notes: str
     visit_again: bool
-    location_id: str
+    location_name: str
 
 
 class UpdateReview(BaseModel):
@@ -25,16 +26,18 @@ class UpdateReview(BaseModel):
 
 
 @router.post("/reviews", description="Create a new review", tags=["reviews"])
-def create_review(
+async def create_review(
     review: CreateReview,
     session: SessionDep,
     user_email: Annotated[str, Depends(get_email_from_token)],
 ):
+    location_data = await get_location_id(review.location_name)
     db_review = Review(
         stars=review.stars,
         notes=review.notes,
         visit_again=review.visit_again,
-        location_id=review.location_id,
+        address=location_data["name"],
+        location_id=location_data["location_id"],
         created_by=user_email,
         created_at=datetime.now(),
     )

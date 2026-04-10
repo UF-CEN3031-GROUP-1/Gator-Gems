@@ -161,8 +161,8 @@ export interface components {
             notes: string;
             /** Visit Again */
             visit_again: boolean;
-            /** Location Id */
-            location_id: string;
+            /** Location Name */
+            location_name: string;
         };
         /** CreateUser */
         CreateUser: {
