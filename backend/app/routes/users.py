@@ -98,12 +98,34 @@ def delete_user(
     dependencies=[Depends(get_email_from_token)],
     tags=["users"],
 )
-def get_user(
+def get_me(
     session: SessionDep, email_address: Annotated[str, Depends(get_email_from_token)]
 ):
     user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+
+    return user
+
+
+@router.get(
+    "/users/{to_get}",
+    description="Get details of the currently authenticated user",
+    response_model=User,
+    dependencies=[Depends(get_is_admin_from_token)],
+    tags=["users"],
+)
+def get_user(
+    session: SessionDep,
+    to_get: Annotated[str, Path(title="Email address of the user to get")],
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
+):
+    user = session.get(User, to_get)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You do not have permission")
 
     return user
 
