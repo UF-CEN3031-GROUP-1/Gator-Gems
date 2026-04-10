@@ -34,10 +34,13 @@ async def get_location_id(location_name: str):
         or ("building" in r.get("display_name", "").lower())
     ]
 
-    if not buildings:
-        raise HTTPException(status_code=404, detail="No building found")
+    if buildings:
+        first = buildings[0]
+    else:
+        first = data[0]
 
-    first = buildings[0]
+    if not data[0]:
+        raise HTTPException(status_code=404, detail="No location found")
 
     return {
         "name": first.get("display_name"),
