@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from app.core.locations import get_location_id
-from app.core.security.jwt_auth import get_email_from_token
+from app.core.security.jwt_auth import get_email_from_token, get_is_admin_from_token
 from app.database.connections import SessionDep
 from app.models.reviews import Review
 
@@ -57,6 +57,7 @@ def update_review(
     review: UpdateReview,
     session: SessionDep,
     user_email: Annotated[str, Depends(get_email_from_token)],
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
     db_review = session.get(Review, review_id)
 

@@ -11,6 +11,8 @@ from app.core.security.constants import (
     ALGORITHM,
     SECRET_KEY,
 )
+from app.database.connections import SessionDep
+from app.models.users import User
 
 bearer_token = HTTPBearer(scheme_name="Authorization")
 
@@ -55,6 +57,24 @@ def get_email_from_token(request: Request):
     try:
         decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return decoded_token["sub"]
+
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+        )
+
+
+def get_is_admin_from_token(request: Request, session: SessionDep):
+    token = request.cookies.get("jwt_token")
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+        )
+    try:
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return session.get(User, decoded_token["sub"]).is_admin
 
     except InvalidTokenError:
         raise HTTPException(
