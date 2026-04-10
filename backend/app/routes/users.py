@@ -20,7 +20,7 @@ class CreateUser(BaseModel):
     password: str
 
 
-@router.post("/users/{email_address}", description="Create a new user")
+@router.post("/users/{email_address}", description="Create a new user", tags=["users"])
 def create_user(
     email_address: Annotated[str, Path(title="Email address of the user to create")],
     user: CreateUser,
@@ -48,6 +48,7 @@ def create_user(
     "/users/me",
     description="Delete the currently authenticated user",
     dependencies=[Depends(get_email_from_token)],
+    tags=["users"],
 )
 def delete_user(
     email_address: Annotated[str, Depends(get_email_from_token)],
@@ -68,6 +69,7 @@ def delete_user(
     description="Get details of the currently authenticated user",
     response_model=User,
     dependencies=[Depends(get_email_from_token)],
+    tags=["users"],
 )
 def get_user(
     session: SessionDep, email_address: Annotated[str, Depends(get_email_from_token)]
@@ -83,6 +85,7 @@ def get_user(
     "/users/{email_address}/login",
     description="Login a user",
     dependencies=[Depends(validate_basic_auth)],
+    tags=["users"],
 )
 def login_user(
     email_address: Annotated[str, Path(title="Email address to login")],
@@ -106,6 +109,7 @@ def login_user(
 @router.get(
     "/users/logout",
     description="Logout the currently authenticated user",
+    tags=["users"],
 )
 def logout_user(response: Response):
     response.delete_cookie(key="jwt_token")

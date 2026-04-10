@@ -10,7 +10,11 @@ class HealthCheckAPIResponse(BaseModel):
     status: str
 
 
-@router.get("/health", response_model=HealthCheckAPIResponse)
+@router.get(
+    "/health",
+    response_model=HealthCheckAPIResponse,
+    tags=["health"],
+)
 def health_check():
     logging.info("Health check endpoint called.")
     return {"status": "healthy"}
