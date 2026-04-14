@@ -8,6 +8,7 @@ from app.core.locations import get_location_id
 from app.core.security.jwt_auth import get_email_from_token, get_is_admin_from_token
 from app.database.connections import SessionDep
 from app.models.reviews import Review
+from sqlmodel import select
 
 router = APIRouter()
 
@@ -25,6 +26,12 @@ class UpdateReview(BaseModel):
     visit_again: Optional[bool] = None
 
 
+@router.get("/reviews", description="Get all reviews", tags=["reviews"])
+def get_reviews(session: SessionDep):
+    reviews = session.exec(select(Review)).all()
+    return reviews
+
+
 @router.post("/reviews", description="Create a new review", tags=["reviews"])
 async def create_review(
     review: CreateReview,
@@ -38,6 +45,8 @@ async def create_review(
         visit_again=review.visit_again,
         address=location_data["name"],
         location_id=location_data["location_id"],
+        lat=float(location_data["lat"]),
+        lon=float(location_data["lon"]),
         created_by=user_email,
         created_at=datetime.now(),
     )

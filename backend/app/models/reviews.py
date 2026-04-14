@@ -14,5 +14,7 @@ class Review(SQLModel, table=True):
     visit_again: bool
     address: str
     location_id: str
+    lat: float
+    lon: float
     created_by: EmailStr = Field(foreign_key="user.email_address")
     created_at: datetime = Field(default_factory=datetime.now)
