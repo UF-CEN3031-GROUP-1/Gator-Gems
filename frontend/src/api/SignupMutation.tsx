@@ -22,6 +22,7 @@ export const useSignupMutation = (setError: (v: string) => void) => {
           firstName: userData.firstName,
           lastName: userData.lastName,
           password: userData.password,
+          is_admin: false,
         },
       })
 
