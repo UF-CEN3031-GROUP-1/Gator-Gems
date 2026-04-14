@@ -63,7 +63,7 @@ code {
 }
 
 .explore-button {
-    padding: 14px 24px;
+  padding: 14px 24px;
   border-radius: 999px;
   font-size: 1rem;
   cursor: pointer;
@@ -96,5 +96,3 @@ code {
   background: rgba(0, 0, 0, 0.352);
   color: rgba(245, 247, 250, 0.82);
 }
-
-
