@@ -19,7 +19,7 @@ class CreateUser(BaseModel):
     firstName: str
     lastName: str
     password: str
-    is_admin: bool
+    is_admin: bool = False
 
 
 @router.post("/users/{email_address}", description="Create a new user", tags=["users"])
