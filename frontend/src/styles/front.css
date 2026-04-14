@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+body {
+  @apply m-0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.bg {
+  background-image: url('/front.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 95vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: white;
+}
+
+.be {
+  width: 850px;
+  min-height: 60vh;
+  padding: 40px 24px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 2rem;
+}
+
+.title {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  color: #f5f7fa;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #f5f7fa;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.explore-button {
+    padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background: rgba(0, 0, 0, 0.352);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.gt-button {
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background: #2f7d57;
+  color: white;
+}
+
+.row {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.item {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.352);
+  color: rgba(245, 247, 250, 0.82);
+}
+
+
