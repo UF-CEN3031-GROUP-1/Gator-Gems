@@ -3,12 +3,12 @@ from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlmodel import select
 
 from app.core.locations import get_location_id
 from app.core.security.jwt_auth import get_email_from_token, get_is_admin_from_token
 from app.database.connections import SessionDep
 from app.models.reviews import Review
-from sqlmodel import select
 
 router = APIRouter()
 

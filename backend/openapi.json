@@ -158,6 +158,26 @@
                 }
             }
         },
+        "/users/logout": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Logout User",
+                "description": "Logout the currently authenticated user",
+                "operationId": "logout_user_users_logout_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{to_get}": {
             "get": {
                 "tags": [
@@ -247,14 +267,14 @@
                 }
             }
         },
-        "/users/logout": {
+        "/reviews": {
             "get": {
                 "tags": [
-                    "users"
+                    "reviews"
                 ],
-                "summary": "Logout User",
-                "description": "Logout the currently authenticated user",
-                "operationId": "logout_user_users_logout_get",
+                "summary": "Get Reviews",
+                "description": "Get all reviews",
+                "operationId": "get_reviews_reviews_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -265,9 +285,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/reviews": {
+            },
             "post": {
                 "tags": [
                     "reviews"
@@ -444,15 +462,15 @@
                     },
                     "is_admin": {
                         "type": "boolean",
-                        "title": "Is Admin"
+                        "title": "Is Admin",
+                        "default": false
                     }
                 },
                 "type": "object",
                 "required": [
                     "firstName",
                     "lastName",
-                    "password",
-                    "is_admin"
+                    "password"
                 ],
                 "title": "CreateUser"
             },

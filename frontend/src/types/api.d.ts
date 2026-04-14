@@ -85,6 +85,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Logout User
+         * @description Logout the currently authenticated user
+         */
+        get: operations["logout_user_users_logout_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users/{to_get}": {
         parameters: {
             query?: never;
@@ -125,26 +145,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Logout User
-         * @description Logout the currently authenticated user
-         */
-        get: operations["logout_user_users_logout_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/reviews": {
         parameters: {
             query?: never;
@@ -152,7 +152,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get Reviews
+         * @description Get all reviews
+         */
+        get: operations["get_reviews_reviews_get"];
         put?: never;
         /**
          * Create Review
@@ -212,7 +216,10 @@ export interface components {
             lastName: string;
             /** Password */
             password: string;
-            /** Is Admin */
+            /**
+             * Is Admin
+             * @default false
+             */
             is_admin: boolean;
         };
         /** HTTPValidationError */
@@ -395,6 +402,26 @@ export interface operations {
             };
         };
     };
+    logout_user_users_logout_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     get_user_users__to_get__get: {
         parameters: {
             query?: never;
@@ -457,7 +484,7 @@ export interface operations {
             };
         };
     };
-    logout_user_users_logout_get: {
+    get_reviews_reviews_get: {
         parameters: {
             query?: never;
             header?: never;

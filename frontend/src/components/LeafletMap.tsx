@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { OpenStreetMapProvider } from 'leaflet-geosearch'
-import SearchControl from './Search'
 import { useReviewsQuery } from '../api/ReviewsQuery'
+import SearchControl from './Search'
 import 'leaflet/dist/leaflet.css'
 
 const provider = new OpenStreetMapProvider({

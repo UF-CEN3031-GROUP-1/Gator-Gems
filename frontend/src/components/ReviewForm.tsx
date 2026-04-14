@@ -47,7 +47,10 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="locationName" className="block text-xs mb-1 font-semibold">
+            <label
+              htmlFor="locationName"
+              className="block text-xs mb-1 font-semibold"
+            >
               Location Name
             </label>
             <input
@@ -107,7 +110,11 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
             </label>
           </div>
 
-          <button type="submit" disabled={mutation.isPending} className="button">
+          <button
+            type="submit"
+            disabled={mutation.isPending}
+            className="button"
+          >
             {mutation.isPending ? 'Saving...' : 'Add Gem'}
           </button>
         </form>

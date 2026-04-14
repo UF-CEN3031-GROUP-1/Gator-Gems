@@ -16,7 +16,7 @@ interface Review {
 export const useReviewsQuery = () => {
   return useQuery({
     queryKey: ['reviews'],
-    queryFn: async (): Promise<Review[]> => {
+    queryFn: async (): Promise<Array<Review>> => {
       const res = await fetch('http://localhost:8000/reviews')
       if (!res.ok) throw new Error('Failed to fetch reviews')
       return res.json()
