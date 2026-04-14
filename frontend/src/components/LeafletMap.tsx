@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { OpenStreetMapProvider } from 'leaflet-geosearch'
 import SearchControl from './Search'
+import { useReviewsQuery } from '../api/ReviewsQuery'
 import 'leaflet/dist/leaflet.css'
 
 const provider = new OpenStreetMapProvider({
@@ -13,6 +14,7 @@ const provider = new OpenStreetMapProvider({
 })
 
 export const LeafletMap = () => {
+  const { data: reviews } = useReviewsQuery()
   const [components, setComponents] = useState<{
     MapContainer: any
     Marker: any
@@ -52,11 +54,17 @@ export const LeafletMap = () => {
           attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[29.6516, -82.3248]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {reviews?.map((review) => (
+          <Marker key={review.id} position={[review.lat, review.lon]}>
+            <Popup>
+              <strong>{review.address}</strong>
+              <br />
+              {'⭐'.repeat(review.stars)} ({review.stars}/10)
+              <br />
+              {review.notes}
+            </Popup>
+          </Marker>
+        ))}
         <SearchControl provider={provider} />
       </MapContainer>
     </div>
