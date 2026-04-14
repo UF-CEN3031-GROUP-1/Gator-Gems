@@ -10,3 +10,4 @@ class User(SQLModel, table=True):
     first_name: str
     last_name: str
     password: str = Field(exclude=True)
+    is_admin: bool = False

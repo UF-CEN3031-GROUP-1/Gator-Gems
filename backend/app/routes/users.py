@@ -7,6 +7,7 @@ from app.core.security.basic_auth import hash_password, validate_basic_auth
 from app.core.security.jwt_auth import (
     create_access_token,
     get_email_from_token,
+    get_is_admin_from_token,
 )
 from app.database.connections import SessionDep
 from app.models.users import User
@@ -18,6 +19,7 @@ class CreateUser(BaseModel):
     firstName: str
     lastName: str
     password: str
+    is_admin: bool
 
 
 @router.post("/users/{email_address}", description="Create a new user", tags=["users"])
@@ -35,6 +37,7 @@ def create_user(
         first_name=user.firstName,
         last_name=user.lastName,
         password=hash_password(user.password),
+        is_admin=user.is_admin,
     )
 
     session.add(db_user)
@@ -50,13 +53,37 @@ def create_user(
     dependencies=[Depends(get_email_from_token)],
     tags=["users"],
 )
-def delete_user(
+def delete_me(
     email_address: Annotated[str, Depends(get_email_from_token)],
     session: SessionDep,
 ):
     user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+
+    session.delete(user)
+    session.commit()
+
+    return {"message": f"User with email {user.email_address} deleted successfully."}
+
+
+@router.delete(
+    "/users/{to_delete}",
+    description="Delete the currently authenticated user",
+    dependencies=[Depends(get_is_admin_from_token)],
+    tags=["users"],
+)
+def delete_user(
+    to_delete: Annotated[str, Path(title="Email address of the user to delete")],
+    session: SessionDep,
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
+):
+    user = session.get(User, to_delete)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You do not have permission")
 
     session.delete(user)
     session.commit()
@@ -71,12 +98,34 @@ def delete_user(
     dependencies=[Depends(get_email_from_token)],
     tags=["users"],
 )
-def get_user(
+def get_me(
     session: SessionDep, email_address: Annotated[str, Depends(get_email_from_token)]
 ):
     user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+
+    return user
+
+
+@router.get(
+    "/users/{to_get}",
+    description="Get details of the currently authenticated user",
+    response_model=User,
+    dependencies=[Depends(get_is_admin_from_token)],
+    tags=["users"],
+)
+def get_user(
+    session: SessionDep,
+    to_get: Annotated[str, Path(title="Email address of the user to get")],
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
+):
+    user = session.get(User, to_get)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You do not have permission")
 
     return user
 

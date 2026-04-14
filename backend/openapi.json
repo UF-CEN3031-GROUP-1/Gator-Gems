@@ -82,9 +82,9 @@
                 "tags": [
                     "users"
                 ],
-                "summary": "Get User",
+                "summary": "Get Me",
                 "description": "Get details of the currently authenticated user",
-                "operationId": "get_user_users_me_get",
+                "operationId": "get_me_users_me_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -102,15 +102,99 @@
                 "tags": [
                     "users"
                 ],
-                "summary": "Delete User",
+                "summary": "Delete Me",
                 "description": "Delete the currently authenticated user",
-                "operationId": "delete_user_users_me_delete",
+                "operationId": "delete_me_users_me_delete",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{to_delete}": {
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete User",
+                "description": "Delete the currently authenticated user",
+                "operationId": "delete_user_users__to_delete__delete",
+                "parameters": [
+                    {
+                        "name": "to_delete",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email address of the user to delete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{to_get}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get User",
+                "description": "Get details of the currently authenticated user",
+                "operationId": "get_user_users__to_get__get",
+                "parameters": [
+                    {
+                        "name": "to_get",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email address of the user to get"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
                             }
                         }
                     }
@@ -357,13 +441,18 @@
                     "password": {
                         "type": "string",
                         "title": "Password"
+                    },
+                    "is_admin": {
+                        "type": "boolean",
+                        "title": "Is Admin"
                     }
                 },
                 "type": "object",
                 "required": [
                     "firstName",
                     "lastName",
-                    "password"
+                    "password",
+                    "is_admin"
                 ],
                 "title": "CreateUser"
             },
@@ -446,6 +535,11 @@
                     "lastName": {
                         "type": "string",
                         "title": "Lastname"
+                    },
+                    "isAdmin": {
+                        "type": "boolean",
+                        "title": "Isadmin",
+                        "default": false
                     }
                 },
                 "type": "object",
