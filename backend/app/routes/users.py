@@ -19,7 +19,7 @@ class CreateUser(BaseModel):
     firstName: str
     lastName: str
     password: str
-    is_admin: bool
+    is_admin: bool = False
 
 
 @router.post("/users/{email_address}", description="Create a new user", tags=["users"])
@@ -109,6 +109,19 @@ def get_me(
 
 
 @router.get(
+    "/users/logout",
+    description="Logout the currently authenticated user",
+    tags=["users"],
+)
+def logout_user(response: Response):
+    # Ensure this explicit route is registered before the dynamic
+    # "/users/{to_get}" route so the path parameter doesn't capture
+    # the literal "logout" value.
+    response.delete_cookie(key="jwt_token")
+    return {"message": "Logged out successfully"}
+
+
+@router.get(
     "/users/{to_get}",
     description="Get details of the currently authenticated user",
     response_model=User,
@@ -153,13 +166,3 @@ def login_user(
     return {
         "message": "Cookie set successfully",
     }
-
-
-@router.get(
-    "/users/logout",
-    description="Logout the currently authenticated user",
-    tags=["users"],
-)
-def logout_user(response: Response):
-    response.delete_cookie(key="jwt_token")
-    return {"message": "Logged out successfully"}
