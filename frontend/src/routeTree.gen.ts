@@ -14,6 +14,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NewPageRouteImport } from './routes/newPage'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GemMapRouteImport } from './routes/gemMap'
+import { Route as AdminPanelRouteImport } from './routes/adminPanel'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -41,6 +42,11 @@ const GemMapRoute = GemMapRouteImport.update({
   path: '/gemMap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPanelRoute = AdminPanelRouteImport.update({
+  id: '/adminPanel',
+  path: '/adminPanel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,6 +55,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adminPanel': typeof AdminPanelRoute
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adminPanel': typeof AdminPanelRoute
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/adminPanel': typeof AdminPanelRoute
   '/gemMap': typeof GemMapRoute
   '/login': typeof LoginRoute
   '/newPage': typeof NewPageRoute
@@ -74,12 +83,27 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gemMap' | '/login' | '/newPage' | '/profile' | '/signup'
+  fullPaths:
+    | '/'
+    | '/adminPanel'
+    | '/gemMap'
+    | '/login'
+    | '/newPage'
+    | '/profile'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gemMap' | '/login' | '/newPage' | '/profile' | '/signup'
+  to:
+    | '/'
+    | '/adminPanel'
+    | '/gemMap'
+    | '/login'
+    | '/newPage'
+    | '/profile'
+    | '/signup'
   id:
     | '__root__'
     | '/'
+    | '/adminPanel'
     | '/gemMap'
     | '/login'
     | '/newPage'
@@ -89,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminPanelRoute: typeof AdminPanelRoute
   GemMapRoute: typeof GemMapRoute
   LoginRoute: typeof LoginRoute
   NewPageRoute: typeof NewPageRoute
@@ -133,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GemMapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/adminPanel': {
+      id: '/adminPanel'
+      path: '/adminPanel'
+      fullPath: '/adminPanel'
+      preLoaderRoute: typeof AdminPanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -145,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminPanelRoute: AdminPanelRoute,
   GemMapRoute: GemMapRoute,
   LoginRoute: LoginRoute,
   NewPageRoute: NewPageRoute,
