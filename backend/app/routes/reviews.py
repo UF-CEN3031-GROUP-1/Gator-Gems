@@ -32,6 +32,15 @@ def get_reviews(session: SessionDep):
     return reviews
 
 
+@router.get("/reviews/me", description="Get reviews by the current user", tags=["reviews"])
+def get_my_reviews(
+    session: SessionDep,
+    user_email: Annotated[str, Depends(get_email_from_token)],
+):
+    reviews = session.exec(select(Review).where(Review.created_by == user_email)).all()
+    return reviews
+
+
 @router.post("/reviews", description="Create a new review", tags=["reviews"])
 async def create_review(
     review: CreateReview,
