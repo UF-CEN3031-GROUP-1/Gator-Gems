@@ -65,21 +65,25 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{to_delete}": {
+    "/admin/users/{email_address}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get User
+         * @description Get details of the currently authenticated user
+         */
+        get: operations["get_user_admin_users__email_address__get"];
         put?: never;
         post?: never;
         /**
          * Delete User
          * @description Delete the currently authenticated user
          */
-        delete: operations["delete_user_users__to_delete__delete"];
+        delete: operations["delete_user_admin_users__email_address__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -97,26 +101,6 @@ export interface paths {
          * @description Logout the currently authenticated user
          */
         get: operations["logout_user_users_logout_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{to_get}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get User
-         * @description Get details of the currently authenticated user
-         */
-        get: operations["get_user_users__to_get__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -391,12 +375,43 @@ export interface operations {
             };
         };
     };
-    delete_user_users__to_delete__delete: {
+    get_user_admin_users__email_address__get: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                to_delete: string;
+                email_address: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_user_admin_users__email_address__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                email_address: string;
             };
             cookie?: never;
         };
@@ -438,37 +453,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
-                };
-            };
-        };
-    };
-    get_user_users__to_get__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                to_get: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["User"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

@@ -69,17 +69,17 @@ def delete_me(
 
 
 @router.delete(
-    "/users/{to_delete}",
+    "/admin/users/{email_address}",
     description="Delete the currently authenticated user",
     dependencies=[Depends(get_is_admin_from_token)],
-    tags=["users"],
+    tags=["users", "admin"],
 )
 def delete_user(
-    to_delete: Annotated[str, Path(title="Email address of the user to delete")],
+    email_address: Annotated[str, Path(title="Email address of the user to delete")],
     session: SessionDep,
     is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
-    user = session.get(User, to_delete)
+    user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
@@ -115,26 +115,23 @@ def get_me(
     tags=["users"],
 )
 def logout_user(response: Response):
-    # Ensure this explicit route is registered before the dynamic
-    # "/users/{to_get}" route so the path parameter doesn't capture
-    # the literal "logout" value.
     response.delete_cookie(key="jwt_token")
     return {"message": "Logged out successfully"}
 
 
 @router.get(
-    "/users/{to_get}",
+    "/admin/users/{email_address}",
     description="Get details of the currently authenticated user",
     response_model=User,
     dependencies=[Depends(get_is_admin_from_token)],
-    tags=["users"],
+    tags=["users", "admin"],
 )
 def get_user(
     session: SessionDep,
-    to_get: Annotated[str, Path(title="Email address of the user to get")],
+    email_address: Annotated[str, Path(title="Email address of the user to get")],
     is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
-    user = session.get(User, to_get)
+    user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
@@ -155,7 +152,6 @@ def get_all_users(
     session: SessionDep,
     is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
-    # dependency ensures requester is authenticated; double-check admin flag
     if not is_admin:
         raise HTTPException(status_code=403, detail="You do not have permission")
 
