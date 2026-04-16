@@ -100,13 +100,15 @@ def delete_review(
     review_id: int,
     session: SessionDep,
     user_email: Annotated[str, Depends(get_email_from_token)],
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
     db_review = session.get(Review, review_id)
 
     if not db_review:
         raise HTTPException(status_code=404, detail="Review not found")
 
-    if db_review.created_by != user_email:
+    # Allow deletion if the requester is the creator or an admin
+    if db_review.created_by != user_email and not is_admin:
         raise HTTPException(
             status_code=403, detail="Not authorized to delete this review"
         )

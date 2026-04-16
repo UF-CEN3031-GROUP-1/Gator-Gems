@@ -41,6 +41,11 @@ export const Navbar = () => {
           )}
           {user && (
             <>
+              {user.isAdmin && (
+                <li>
+                  <Link to="/adminPanel"> Admin </Link>
+                </li>
+              )}
               <li>
                 <Link to="/profile"> Profile </Link>
               </li>

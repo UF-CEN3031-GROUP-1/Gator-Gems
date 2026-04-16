@@ -117,17 +117,18 @@
                 }
             }
         },
-        "/users/{to_delete}": {
+        "/admin/users/{email_address}": {
             "delete": {
                 "tags": [
-                    "users"
+                    "users",
+                    "admin"
                 ],
                 "summary": "Delete User",
                 "description": "Delete the currently authenticated user",
-                "operationId": "delete_user_users__to_delete__delete",
+                "operationId": "delete_user_admin_users__email_address__delete",
                 "parameters": [
                     {
-                        "name": "to_delete",
+                        "name": "email_address",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -142,6 +143,48 @@
                         "content": {
                             "application/json": {
                                 "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "users",
+                    "admin"
+                ],
+                "summary": "Get User",
+                "description": "Get details of the currently authenticated user",
+                "operationId": "get_user_admin_users__email_address__get",
+                "parameters": [
+                    {
+                        "name": "email_address",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email address of the user to get"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
                             }
                         }
                     },
@@ -178,42 +221,26 @@
                 }
             }
         },
-        "/users/{to_get}": {
+        "/admin/users": {
             "get": {
                 "tags": [
-                    "users"
+                    "users",
+                    "admin"
                 ],
-                "summary": "Get User",
-                "description": "Get details of the currently authenticated user",
-                "operationId": "get_user_users__to_get__get",
-                "parameters": [
-                    {
-                        "name": "to_get",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Email address of the user to get"
-                        }
-                    }
-                ],
+                "summary": "Get All Users",
+                "description": "Get list of all users (admin only)",
+                "operationId": "get_all_users_admin_users_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Users Admin Users Get"
                                 }
                             }
                         }
