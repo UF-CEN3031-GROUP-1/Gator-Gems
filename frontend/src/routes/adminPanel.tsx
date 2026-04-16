@@ -1,57 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useReviewsQuery } from '../api/ReviewsQuery'
 import { useUserQuery } from '../api/UserQuery'
+import { useDeleteReviewMutation } from '../api/DeleteReviewMutation'
+import { useDeleteUserMutation } from '../api/DeleteUserMutation'
+import { useUsersQuery } from '../api/UsersQuery'
 
 export const Route = createFileRoute('/adminPanel')({
-  component: RouteComponent,
+  component: App,
 })
 
-function RouteComponent() {
-  const qc = useQueryClient()
+function App() {
   const { data: user, isLoading: userLoading } = useUserQuery()
   const reviewsQuery = useReviewsQuery()
-  const usersQuery = useQuery({
-    queryKey: ['adminUsers'],
-    queryFn: async () => {
-      const res = await fetch('http://localhost:8000/admin/users', {
-        credentials: 'include',
-      })
-      if (!res.ok) throw new Error('Failed to fetch users')
-      return res.json()
-    },
-  })
-
-  const deleteReviewMutation = useMutation({
-    mutationFn: async (id: number) => {
-      const res = await fetch(`http://localhost:8000/reviews/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      })
-      if (!res.ok) throw new Error('Failed to delete review')
-      return res
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['reviews'] }),
-  })
-
-  const deleteUserMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const res = await fetch(
-        `http://localhost:8000/users/${encodeURIComponent(email)}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-        },
-      )
-      if (!res.ok) throw new Error('Failed to delete user')
-      return res
-    },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['reviews'] })
-      qc.invalidateQueries({ queryKey: ['adminUsers'] })
-    },
-  })
-
+  const usersQuery = useUsersQuery()
+  const deleteReviewMutation = useDeleteReviewMutation()
+  const deleteUserMutation = useDeleteUserMutation()
   if (userLoading || reviewsQuery.isLoading || usersQuery.isLoading)
     return <div>Loading...</div>
 
@@ -104,18 +67,6 @@ function RouteComponent() {
                     >
                       Delete Review
                     </button>
-                    {r.createdBy && (
-                      <button
-                        onClick={() => {
-                          if (!window.confirm(`Delete user ${r.createdBy}?`))
-                            return
-                          ;(deleteUserMutation as any).mutate(r.createdBy)
-                        }}
-                        disabled={(deleteUserMutation as any).isLoading}
-                      >
-                        Delete User
-                      </button>
-                    )}
                   </td>
                 </tr>
               ))}
