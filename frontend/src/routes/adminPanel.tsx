@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useReviewsQuery } from '../api/ReviewsQuery'
 import { useUserQuery } from '../api/UserQuery'
 
@@ -11,6 +11,16 @@ function RouteComponent() {
   const qc = useQueryClient()
   const { data: user, isLoading: userLoading } = useUserQuery()
   const reviewsQuery = useReviewsQuery()
+  const usersQuery = useQuery({
+    queryKey: ['adminUsers'],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:8000/admin/users', {
+        credentials: 'include',
+      })
+      if (!res.ok) throw new Error('Failed to fetch users')
+      return res.json()
+    },
+  })
 
   const deleteReviewMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -38,20 +48,19 @@ function RouteComponent() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['reviews'] })
+      qc.invalidateQueries({ queryKey: ['adminUsers'] })
     },
   })
 
-  if (userLoading || reviewsQuery.isLoading) return <div>Loading...</div>
+  if (userLoading || reviewsQuery.isLoading || usersQuery.isLoading)
+    return <div>Loading...</div>
 
   if (!user || !user.isAdmin) {
     return <div>Unauthorized — admin access required.</div>
   }
 
   const reviews = reviewsQuery.data ?? []
-
-  const uniqueUsers = Array.from(
-    new Set(reviews.map((r) => r.createdBy)),
-  ).filter(Boolean)
+  const users = usersQuery.data ?? []
 
   return (
     <div style={{ padding: 20 }}>
@@ -116,17 +125,19 @@ function RouteComponent() {
       </section>
 
       <section>
-        <h3>Users ({uniqueUsers.length})</h3>
-        {uniqueUsers.length === 0 && <div>No users found.</div>}
-        {uniqueUsers.length > 0 && (
+        <h3>Users ({users.length})</h3>
+        {users.length === 0 && <div>No users found.</div>}
+        {users.length > 0 && (
           <ul>
-            {uniqueUsers.map((email) => (
-              <li key={email} style={{ marginBottom: 8 }}>
-                {email}{' '}
+            {users.map((u: any) => (
+              <li key={u.emailAddress} style={{ marginBottom: 8 }}>
+                {u.emailAddress}{' '}
+                {u.firstName ? `(${u.firstName} ${u.lastName})` : ''}{' '}
                 <button
                   onClick={() => {
-                    if (!window.confirm(`Delete user ${email}?`)) return
-                    ;(deleteUserMutation as any).mutate(email)
+                    if (!window.confirm(`Delete user ${u.emailAddress}?`))
+                      return
+                    ;(deleteUserMutation as any).mutate(u.emailAddress)
                   }}
                   disabled={(deleteUserMutation as any).isLoading}
                 >

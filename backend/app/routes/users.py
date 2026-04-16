@@ -1,7 +1,8 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Response
 from pydantic import BaseModel
+from sqlmodel import select
 
 from app.core.security.basic_auth import hash_password, validate_basic_auth
 from app.core.security.jwt_auth import (
@@ -141,6 +142,25 @@ def get_user(
         raise HTTPException(status_code=403, detail="You do not have permission")
 
     return user
+
+
+@router.get(
+    "/admin/users",
+    description="Get list of all users (admin only)",
+    response_model=List[User],
+    dependencies=[Depends(get_is_admin_from_token)],
+    tags=["users", "admin"],
+)
+def get_all_users(
+    session: SessionDep,
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
+):
+    # dependency ensures requester is authenticated; double-check admin flag
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You do not have permission")
+
+    users = session.exec(select(User)).all()
+    return users
 
 
 @router.get(

@@ -221,6 +221,33 @@
                 }
             }
         },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "users",
+                    "admin"
+                ],
+                "summary": "Get All Users",
+                "description": "Get list of all users (admin only)",
+                "operationId": "get_all_users_admin_users_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Users Admin Users Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{email_address}/login": {
             "get": {
                 "tags": [
