@@ -16,7 +16,7 @@ export interface Review {
 export const useMyReviewsQuery = () => {
   return useQuery({
     queryKey: ['reviews', 'me'],
-    queryFn: async (): Promise<Review[]> => {
+    queryFn: async (): Promise<Array<Review>> => {
       const res = await fetch('http://localhost:8000/reviews/me', {
         credentials: 'include',
       })

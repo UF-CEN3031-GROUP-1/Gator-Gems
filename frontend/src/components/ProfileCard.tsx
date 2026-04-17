@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useUserQuery } from '../api/UserQuery'
 import { useMyReviewsQuery } from '../api/MyReviewsQuery'
-import type { Review } from '../api/MyReviewsQuery'
 import EditReviewModal from './EditReviewModal'
+import type { Review } from '../api/MyReviewsQuery'
 
 export default function ProfileCard() {
   const { data: user, isPending, isError } = useUserQuery()
@@ -20,7 +20,9 @@ export default function ProfileCard() {
   if (isError || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <p className="text-red-400">Failed to load profile. Please log in again.</p>
+        <p className="text-red-400">
+          Failed to load profile. Please log in again.
+        </p>
       </div>
     )
   }
@@ -52,11 +54,15 @@ export default function ProfileCard() {
           <h2 className="text-lg font-semibold mb-4">Account Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <p className="text-xs font-semibold text-gray-400 mb-1">First Name</p>
+              <p className="text-xs font-semibold text-gray-400 mb-1">
+                First Name
+              </p>
               <p className="text-white">{user.firstName}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-400 mb-1">Last Name</p>
+              <p className="text-xs font-semibold text-gray-400 mb-1">
+                Last Name
+              </p>
               <p className="text-white">{user.lastName}</p>
             </div>
             <div>
@@ -85,14 +91,21 @@ export default function ProfileCard() {
                   className="bg-gray-700 rounded-lg p-4 flex items-start justify-between gap-4"
                 >
                   <div className="min-w-0">
-                    <p className="font-semibold text-white truncate">{review.address}</p>
+                    <p className="font-semibold text-white truncate">
+                      {review.address}
+                    </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      {'⭐'.repeat(Math.min(review.stars, 10))} {review.stars}/10
+                      {'⭐'.repeat(Math.min(review.stars, 10))} {review.stars}
+                      /10
                       {review.visitAgain && (
-                        <span className="ml-2 text-green-400">· Would visit again</span>
+                        <span className="ml-2 text-green-400">
+                          · Would visit again
+                        </span>
                       )}
                     </p>
-                    <p className="text-sm text-gray-300 mt-2 line-clamp-2">{review.notes}</p>
+                    <p className="text-sm text-gray-300 mt-2 line-clamp-2">
+                      {review.notes}
+                    </p>
                   </div>
                   <button
                     onClick={() => setEditingReview(review)}
