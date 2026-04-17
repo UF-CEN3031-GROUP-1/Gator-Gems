@@ -32,7 +32,9 @@ def get_reviews(session: SessionDep):
     return reviews
 
 
-@router.get("/reviews/me", description="Get reviews by the current user", tags=["reviews"])
+@router.get(
+    "/reviews/me", description="Get reviews by the current user", tags=["reviews"]
+)
 def get_my_reviews(
     session: SessionDep,
     user_email: Annotated[str, Depends(get_email_from_token)],
