@@ -1,17 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCreateReviewMutation } from '../api/CreateReviewMutation'
 import '../styles/auth.css'
 
 interface ReviewFormProps {
   onClose: () => void
+  selectedLocation?: string | null
 }
 
-export default function ReviewForm({ onClose }: ReviewFormProps) {
+export default function ReviewForm({
+  onClose,
+  selectedLocation,
+}: ReviewFormProps) {
   const [locationName, setLocationName] = useState('')
   const [stars, setStars] = useState(5)
   const [notes, setNotes] = useState('')
   const [visitAgain, setVisitAgain] = useState(true)
   const [error, setError] = useState('')
+  useEffect(() => {
+    if (selectedLocation) {
+      setLocationName(selectedLocation)
+    }
+  }, [selectedLocation])
 
   const mutation = useCreateReviewMutation(onClose, setError)
 
@@ -46,24 +55,42 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
         {error && <div className="error">{error}</div>}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="locationName"
-              className="block text-xs mb-1 font-semibold"
-            >
-              Location Name
-            </label>
-            <input
-              type="text"
-              id="locationName"
-              value={locationName}
-              onChange={(e) => setLocationName(e.target.value)}
-              disabled={mutation.isPending}
-              className="textBox"
-              placeholder="e.g. Depot Park, Gainesville"
-              required
-            />
-          </div>
+          {!selectedLocation && (
+            <div>
+              <label
+                htmlFor="locationName"
+                className="block text-xs mb-1 font-semibold"
+              >
+                Location Name
+              </label>
+              <input
+                type="text"
+                id="locationName"
+                value={locationName}
+                onChange={(e) => setLocationName(e.target.value)}
+                disabled={mutation.isPending}
+                className="textBox"
+                placeholder="e.g. Depot Park, Gainesville"
+                required
+              />
+            </div>
+          )}
+          {selectedLocation && (
+            <div>
+              <label
+                htmlFor="locationName"
+                className="block text-xs mb-1 font-semibold"
+              >
+                Location Name
+              </label>
+              <label
+                htmlFor="locationName"
+                className="block text-base mb-1 font-semibold"
+              >
+                {locationName}
+              </label>
+            </div>
+          )}
 
           <div>
             <label htmlFor="stars" className="block text-xs mb-1 font-semibold">

@@ -8,7 +8,10 @@ interface EditReviewModalProps {
   onClose: () => void
 }
 
-export default function EditReviewModal({ review, onClose }: EditReviewModalProps) {
+export default function EditReviewModal({
+  review,
+  onClose,
+}: EditReviewModalProps) {
   const [stars, setStars] = useState(review.stars)
   const [notes, setNotes] = useState(review.notes)
   const [visitAgain, setVisitAgain] = useState(review.visitAgain)
@@ -87,7 +90,11 @@ export default function EditReviewModal({ review, onClose }: EditReviewModalProp
             </label>
           </div>
 
-          <button type="submit" disabled={mutation.isPending} className="button">
+          <button
+            type="submit"
+            disabled={mutation.isPending}
+            className="button"
+          >
             {mutation.isPending ? 'Saving...' : 'Save Changes'}
           </button>
         </form>
