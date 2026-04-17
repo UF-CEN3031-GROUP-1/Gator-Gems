@@ -117,17 +117,18 @@
                 }
             }
         },
-        "/users/{to_delete}": {
+        "/admin/users/{email_address}": {
             "delete": {
                 "tags": [
-                    "users"
+                    "users",
+                    "admin"
                 ],
                 "summary": "Delete User",
                 "description": "Delete the currently authenticated user",
-                "operationId": "delete_user_users__to_delete__delete",
+                "operationId": "delete_user_admin_users__email_address__delete",
                 "parameters": [
                     {
-                        "name": "to_delete",
+                        "name": "email_address",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -156,19 +157,18 @@
                         }
                     }
                 }
-            }
-        },
-        "/users/{to_get}": {
+            },
             "get": {
                 "tags": [
-                    "users"
+                    "users",
+                    "admin"
                 ],
                 "summary": "Get User",
                 "description": "Get details of the currently authenticated user",
-                "operationId": "get_user_users__to_get__get",
+                "operationId": "get_user_admin_users__email_address__get",
                 "parameters": [
                     {
-                        "name": "to_get",
+                        "name": "email_address",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -194,6 +194,53 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Logout User",
+                "description": "Logout the currently authenticated user",
+                "operationId": "logout_user_users_logout_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "users",
+                    "admin"
+                ],
+                "summary": "Get All Users",
+                "description": "Get list of all users (admin only)",
+                "operationId": "get_all_users_admin_users_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Users Admin Users Get"
                                 }
                             }
                         }
@@ -247,14 +294,14 @@
                 }
             }
         },
-        "/users/logout": {
+        "/reviews": {
             "get": {
                 "tags": [
-                    "users"
+                    "reviews"
                 ],
-                "summary": "Logout User",
-                "description": "Logout the currently authenticated user",
-                "operationId": "logout_user_users_logout_get",
+                "summary": "Get Reviews",
+                "description": "Get all reviews",
+                "operationId": "get_reviews_reviews_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -265,9 +312,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/reviews": {
+            },
             "post": {
                 "tags": [
                     "reviews"
@@ -444,15 +489,15 @@
                     },
                     "is_admin": {
                         "type": "boolean",
-                        "title": "Is Admin"
+                        "title": "Is Admin",
+                        "default": false
                     }
                 },
                 "type": "object",
                 "required": [
                     "firstName",
                     "lastName",
-                    "password",
-                    "is_admin"
+                    "password"
                 ],
                 "title": "CreateUser"
             },

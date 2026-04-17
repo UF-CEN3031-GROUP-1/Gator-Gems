@@ -65,27 +65,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{to_delete}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Delete User
-         * @description Delete the currently authenticated user
-         */
-        delete: operations["delete_user_users__to_delete__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{to_get}": {
+    "/admin/users/{email_address}": {
         parameters: {
             query?: never;
             header?: never;
@@ -96,7 +76,51 @@ export interface paths {
          * Get User
          * @description Get details of the currently authenticated user
          */
-        get: operations["get_user_users__to_get__get"];
+        get: operations["get_user_admin_users__email_address__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete User
+         * @description Delete the currently authenticated user
+         */
+        delete: operations["delete_user_admin_users__email_address__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Logout User
+         * @description Logout the currently authenticated user
+         */
+        get: operations["logout_user_users_logout_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get All Users
+         * @description Get list of all users (admin only)
+         */
+        get: operations["get_all_users_admin_users_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -125,26 +149,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Logout User
-         * @description Logout the currently authenticated user
-         */
-        get: operations["logout_user_users_logout_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/reviews": {
         parameters: {
             query?: never;
@@ -152,7 +156,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get Reviews
+         * @description Get all reviews
+         */
+        get: operations["get_reviews_reviews_get"];
         put?: never;
         /**
          * Create Review
@@ -212,7 +220,10 @@ export interface components {
             lastName: string;
             /** Password */
             password: string;
-            /** Is Admin */
+            /**
+             * Is Admin
+             * @default false
+             */
             is_admin: boolean;
         };
         /** HTTPValidationError */
@@ -364,12 +375,43 @@ export interface operations {
             };
         };
     };
-    delete_user_users__to_delete__delete: {
+    get_user_admin_users__email_address__get: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                to_delete: string;
+                email_address: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_user_admin_users__email_address__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                email_address: string;
             };
             cookie?: never;
         };
@@ -395,13 +437,11 @@ export interface operations {
             };
         };
     };
-    get_user_users__to_get__get: {
+    logout_user_users_logout_get: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                to_get: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -412,16 +452,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["User"];
+                    "application/json": unknown;
                 };
             };
-            /** @description Validation Error */
-            422: {
+        };
+    };
+    get_all_users_admin_users_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["User"][];
                 };
             };
         };
@@ -457,7 +508,7 @@ export interface operations {
             };
         };
     };
-    logout_user_users_logout_get: {
+    get_reviews_reviews_get: {
         parameters: {
             query?: never;
             header?: never;

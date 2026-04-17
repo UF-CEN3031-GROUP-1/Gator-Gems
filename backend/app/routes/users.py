@@ -1,7 +1,8 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Response
 from pydantic import BaseModel
+from sqlmodel import select
 
 from app.core.security.basic_auth import hash_password, validate_basic_auth
 from app.core.security.jwt_auth import (
@@ -19,7 +20,7 @@ class CreateUser(BaseModel):
     firstName: str
     lastName: str
     password: str
-    is_admin: bool
+    is_admin: bool = False
 
 
 @router.post("/users/{email_address}", description="Create a new user", tags=["users"])
@@ -68,17 +69,17 @@ def delete_me(
 
 
 @router.delete(
-    "/users/{to_delete}",
+    "/admin/users/{email_address}",
     description="Delete the currently authenticated user",
     dependencies=[Depends(get_is_admin_from_token)],
-    tags=["users"],
+    tags=["users", "admin"],
 )
 def delete_user(
-    to_delete: Annotated[str, Path(title="Email address of the user to delete")],
+    email_address: Annotated[str, Path(title="Email address of the user to delete")],
     session: SessionDep,
     is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
-    user = session.get(User, to_delete)
+    user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
@@ -109,18 +110,28 @@ def get_me(
 
 
 @router.get(
-    "/users/{to_get}",
+    "/users/logout",
+    description="Logout the currently authenticated user",
+    tags=["users"],
+)
+def logout_user(response: Response):
+    response.delete_cookie(key="jwt_token")
+    return {"message": "Logged out successfully"}
+
+
+@router.get(
+    "/admin/users/{email_address}",
     description="Get details of the currently authenticated user",
     response_model=User,
     dependencies=[Depends(get_is_admin_from_token)],
-    tags=["users"],
+    tags=["users", "admin"],
 )
 def get_user(
     session: SessionDep,
-    to_get: Annotated[str, Path(title="Email address of the user to get")],
+    email_address: Annotated[str, Path(title="Email address of the user to get")],
     is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
 ):
-    user = session.get(User, to_get)
+    user = session.get(User, email_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
@@ -128,6 +139,24 @@ def get_user(
         raise HTTPException(status_code=403, detail="You do not have permission")
 
     return user
+
+
+@router.get(
+    "/admin/users",
+    description="Get list of all users (admin only)",
+    response_model=List[User],
+    dependencies=[Depends(get_is_admin_from_token)],
+    tags=["users", "admin"],
+)
+def get_all_users(
+    session: SessionDep,
+    is_admin: Annotated[bool, Depends(get_is_admin_from_token)],
+):
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You do not have permission")
+
+    users = session.exec(select(User)).all()
+    return users
 
 
 @router.get(
@@ -153,13 +182,3 @@ def login_user(
     return {
         "message": "Cookie set successfully",
     }
-
-
-@router.get(
-    "/users/logout",
-    description="Logout the currently authenticated user",
-    tags=["users"],
-)
-def logout_user(response: Response):
-    response.delete_cookie(key="jwt_token")
-    return {"message": "Logged out successfully"}

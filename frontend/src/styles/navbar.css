@@ -19,7 +19,8 @@ code {
   background-position: center;
   justify-content: space-between;
   align-items: center;
-  background-color: #005a06;
+  background: rgba(24, 78, 48, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1rem;
   opacity: 0.9;
   height: 5vh;

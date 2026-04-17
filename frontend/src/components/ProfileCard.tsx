@@ -1,47 +1,13 @@
-import Stack from '@mui/material/Stack'
-import Container from '@mui/material/Container'
+import { useState } from 'react'
 import { useUserQuery } from '../api/UserQuery'
-import MediaCard from './ListCard'
+import { useMyReviewsQuery } from '../api/MyReviewsQuery'
+import type { Review } from '../api/MyReviewsQuery'
+import EditReviewModal from './EditReviewModal'
 
 export default function ProfileCard() {
-  const cardData = [
-    {
-      image: '/GainesvilleDownTown.jpg',
-      title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description:
-        'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap',
-    },
-    {
-      image: '/GainesvilleDownTown.jpg',
-      title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description:
-        'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap',
-    },
-    {
-      image: '/GainesvilleDownTown.jpg',
-      title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description:
-        'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap',
-    },
-    {
-      image: '/GainesvilleDownTown.jpg',
-      title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description:
-        'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap',
-    },
-    {
-      image: '/GainesvilleDownTown.jpg',
-      title: 'THE GREATEST GEM IN THE UNIVERSE',
-      description:
-        'Why do you need a description when you got the greatest gem in the universe?',
-      buttonUrl: '/gemMap',
-    },
-  ]
   const { data: user, isPending, isError } = useUserQuery()
+  const { data: reviews } = useMyReviewsQuery()
+  const [editingReview, setEditingReview] = useState<Review | null>(null)
 
   if (isPending) {
     return (
@@ -54,9 +20,7 @@ export default function ProfileCard() {
   if (isError || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <p className="text-red-400">
-          Failed to load profile. Please log in again.
-        </p>
+        <p className="text-red-400">Failed to load profile. Please log in again.</p>
       </div>
     )
   }
@@ -88,15 +52,11 @@ export default function ProfileCard() {
           <h2 className="text-lg font-semibold mb-4">Account Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <p className="text-xs font-semibold text-gray-400 mb-1">
-                First Name
-              </p>
+              <p className="text-xs font-semibold text-gray-400 mb-1">First Name</p>
               <p className="text-white">{user.firstName}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-400 mb-1">
-                Last Name
-              </p>
+              <p className="text-xs font-semibold text-gray-400 mb-1">Last Name</p>
               <p className="text-white">{user.lastName}</p>
             </div>
             <div>
@@ -106,28 +66,44 @@ export default function ProfileCard() {
           </div>
         </div>
 
-        {/* Placeholder: My Gems */}
+        {/* My Reviews */}
         <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-          <h2 className="text-lg font-semibold mb-2">My Gems</h2>
-          <Container maxWidth="lg" sx={{ py: 2 }}>
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{
-                overflowX: 'auto',
-                py: 2.5,
-              }}
-            >
-              {cardData.map((card) => (
-                <MediaCard
-                  image={card.image}
-                  title={card.title}
-                  description={card.description}
-                  buttonUrl={card.buttonUrl}
-                />
+          <h2 className="text-lg font-semibold mb-4">My Gems</h2>
+
+          {!reviews || reviews.length === 0 ? (
+            <p className="text-gray-500 text-sm">
+              No gems yet —{' '}
+              <a href="/gemMap" className="text-green-400 hover:underline">
+                go add one!
+              </a>
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-gray-700 rounded-lg p-4 flex items-start justify-between gap-4"
+                >
+                  <div className="min-w-0">
+                    <p className="font-semibold text-white truncate">{review.address}</p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {'⭐'.repeat(Math.min(review.stars, 10))} {review.stars}/10
+                      {review.visitAgain && (
+                        <span className="ml-2 text-green-400">· Would visit again</span>
+                      )}
+                    </p>
+                    <p className="text-sm text-gray-300 mt-2 line-clamp-2">{review.notes}</p>
+                  </div>
+                  <button
+                    onClick={() => setEditingReview(review)}
+                    className="shrink-0 text-xs bg-gray-600 hover:bg-gray-500 text-white px-3 py-1.5 rounded"
+                  >
+                    Edit
+                  </button>
+                </div>
               ))}
-            </Stack>
-          </Container>
+            </div>
+          )}
         </div>
 
         {/* Placeholder: Activity */}
@@ -146,6 +122,13 @@ export default function ProfileCard() {
           </p>
         </div>
       </div>
+
+      {editingReview && (
+        <EditReviewModal
+          review={editingReview}
+          onClose={() => setEditingReview(null)}
+        />
+      )}
     </div>
   )
 }
