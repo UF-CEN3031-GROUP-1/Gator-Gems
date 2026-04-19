@@ -1,10 +1,3 @@
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-
 export default function MediaCard({
   image,
   title,
@@ -17,34 +10,34 @@ export default function MediaCard({
   buttonUrl: string
 }) {
   return (
-    <Card
-      sx={{ maxWidth: 345, minWidth: 345, flexShrink: 0, bgcolor: '#333333' }}
+    <div
+      style={{
+        maxWidth: 345,
+        minWidth: 345,
+        flexShrink: 0,
+        background: '#333',
+      }}
     >
-      <CardMedia sx={{ height: 140 }} image={image} title={title} />
-      <CardContent>
-        <Typography
-          gutterBottom
-          variant="h5"
-          component="div"
-          sx={{ color: '#9f9f9f' }}
-        >
+      <div
+        style={{
+          height: 140,
+          backgroundImage: `url(${image})`,
+          backgroundSize: 'cover',
+        }}
+        role="img"
+        aria-label={title}
+      />
+      <div style={{ padding: 16 }}>
+        <div style={{ color: '#9f9f9f', fontSize: '1.25rem', fontWeight: 500 }}>
           {title}
-        </Typography>
-        <Typography variant="body2" sx={{ color: '#9f9f9f' }}>
-          {description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          size="small"
-          component="a"
-          href={buttonUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        </div>
+        <div style={{ color: '#9f9f9f' }}>{description}</div>
+      </div>
+      <div style={{ padding: 8 }}>
+        <a href={buttonUrl} target="_blank" rel="noopener noreferrer">
           Show Map
-        </Button>
-      </CardActions>
-    </Card>
+        </a>
+      </div>
+    </div>
   )
 }
