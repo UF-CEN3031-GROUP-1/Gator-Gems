@@ -352,6 +352,26 @@
                 }
             }
         },
+        "/reviews/me": {
+            "get": {
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Get My Reviews",
+                "description": "Get reviews by the current user",
+                "operationId": "get_my_reviews_reviews_me_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/reviews/{review_id}": {
             "put": {
                 "tags": [
