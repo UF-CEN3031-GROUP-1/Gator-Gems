@@ -106,7 +106,7 @@ export const LeafletMap = () => {
             WebkitBackdropFilter: 'blur(10px)',
             padding: '10px',
             boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            borderRadius: '0.5rem'
+            borderRadius: '0.5rem',
           }}
         >
           <button

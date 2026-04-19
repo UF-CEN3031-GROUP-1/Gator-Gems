@@ -26,9 +26,9 @@ code {
 }
 
 .backElement {
-  background: rgba(14, 14, 14, 0.521); 
+  background: rgba(14, 14, 14, 0.521);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow:
