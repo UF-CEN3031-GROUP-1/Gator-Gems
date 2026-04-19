@@ -26,11 +26,22 @@ function App() {
   const users = usersQuery.data ?? []
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Admin Panel</h2>
+    <div className="min-h-screen bg-green-950 text-white">
+    <div style={{}}>
+      <div className="bg-gray-700/40 backdrop-blur-[5px] border-b border-gray-700 px-8 py-10">
+        <div className="max-w-3xl mx-auto">
+            <div>
+              <h1 className="text-3xl font-bold">
+                Admin Panel
+              </h1>
+          </div>
+        </div>
+      </div>
 
+      <div className="max-w-4xl mx-auto px-8 py-8 space-y-6">
+      <div className="bg-gray-700/40 backdrop-blur-[10px] rounded-lg p-6 border border-gray-700">
       <section style={{ marginBottom: 24 }}>
-        <h3>Reviews ({reviews.length})</h3>
+        <h2 className="text-lg font-semibold mb-4">Reviews ({reviews.length})</h2>
         {reviews.length === 0 && <div>No reviews found.</div>}
         {reviews.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -65,7 +76,7 @@ function App() {
                       disabled={(deleteReviewMutation as any).isLoading}
                       style={{ marginRight: 8 }}
                     >
-                      Delete Review
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -74,9 +85,10 @@ function App() {
           </table>
         )}
       </section>
-
+      </div>
+      <div className="bg-gray-700/40 backdrop-blur-[10px] rounded-lg p-6 border border-gray-700">
       <section>
-        <h3>Users ({users.length})</h3>
+        <h2 className="text-lg font-semibold mb-4">Users ({users.length})</h2>
         {users.length === 0 && <div>No users found.</div>}
         {users.length > 0 && (
           <ul>
@@ -99,6 +111,9 @@ function App() {
           </ul>
         )}
       </section>
+      </div>
+      </div>
+    </div>
     </div>
   )
 }

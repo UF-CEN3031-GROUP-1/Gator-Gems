@@ -16,7 +16,7 @@ export const ReviewList = ({ onClose, locationId }: ReviewFormProps) => {
   if (isPending) return <div>Loading reviews...</div>
   if (isError) return <div>Error loading reviews</div>
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60">
+    <div className="fixed text-white inset-0 z-[1000] flex items-center justify-center bg-black/60">
       <div className="backElement w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Reviews of {locationName}</h2>
