@@ -1,3 +1,4 @@
+/** @vitest-environment jsdom */
 import { describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { createMockRoute } from '../mock-routes'

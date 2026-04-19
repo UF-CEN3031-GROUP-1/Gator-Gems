@@ -11,7 +11,12 @@ export const Navbar = () => {
   const handleClick = () => {
     logoutMutation.mutate()
   }
-  const location = useLocation({ select: (location) => location.pathname })
+  let location = '/'
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    location = useLocation({ select: (location) => location.pathname }) || '/'
+  } catch (e) {}
   return (
     <nav className="navbar">
       <div className="navbar-left">
