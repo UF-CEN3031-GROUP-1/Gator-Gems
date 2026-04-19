@@ -19,6 +19,7 @@ export const LeafletMap = () => {
   const [showList, setShowList] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [queryLocation, setQueryLocation] = useState<string | null>(null)
   const { data: reviews } = useReviewsQuery()
   const [components, setComponents] = useState<{
     MapContainer: any
@@ -48,7 +49,7 @@ export const LeafletMap = () => {
   const { MapContainer, Marker, Popup, TileLayer } = components
 
   return (
-    <div style={{ height: '95vh', width: '100%' }}>
+    <div style={{ height: '95vh', width: '100%', position: 'relative' }}>
       <MapContainer
         center={[29.6516, -82.3248]}
         zoom={13}
@@ -86,8 +87,36 @@ export const LeafletMap = () => {
             </Popup>
           </Marker>
         ))}
-        <SearchControl provider={provider} />
+        <SearchControl
+          provider={provider}
+          onResult={(result) => {
+            setQueryLocation(result.label)
+          }}
+        />
       </MapContainer>
+      {queryLocation && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            zIndex: 1000,
+            background: 'white',
+            padding: '10px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          }}
+        >
+          <button
+            onClick={() => {
+              setShowForm(true)
+              setSelectedLocation(queryLocation)
+            }}
+            className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+          >
+            Create Review
+          </button>
+        </div>
+      )}
       {showList && (
         <ReviewList
           onClose={() => setShowList(false)}
