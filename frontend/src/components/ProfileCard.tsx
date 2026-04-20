@@ -28,9 +28,9 @@ export default function ProfileCard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-green-950 text-white">
       {/* User info header */}
-      <div className="bg-gray-800 border-b border-gray-700 px-8 py-10">
+      <div className="bg-gray-700/40 backdrop-blur-[5px] border-b border-gray-700 px-8 py-10">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-full bg-green-900 flex items-center justify-center text-3xl font-bold text-green-300">
@@ -50,7 +50,7 @@ export default function ProfileCard() {
       {/* Content area */}
       <div className="max-w-4xl mx-auto px-8 py-8 space-y-6">
         {/* Account details */}
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+        <div className="bg-gray-700/40 backdrop-blur-[10px] rounded-lg p-6 border border-gray-700">
           <h2 className="text-lg font-semibold mb-4">Account Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -73,7 +73,7 @@ export default function ProfileCard() {
         </div>
 
         {/* My Reviews */}
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+        <div className="bg-gray-700/40 backdrop-blur-[10px] rounded-lg p-6 border border-gray-700">
           <h2 className="text-lg font-semibold mb-4">My Gems</h2>
 
           {!reviews || reviews.length === 0 ? (
@@ -88,7 +88,7 @@ export default function ProfileCard() {
               {reviews.map((review) => (
                 <div
                   key={review.id}
-                  className="bg-gray-700 rounded-lg p-4 flex items-start justify-between gap-4"
+                  className="bg-gray-700/20 backdrop-blur-[1px] border border-gray-600 rounded-lg p-4 flex items-start justify-between gap-4"
                 >
                   <div className="min-w-0">
                     <p className="font-semibold text-white truncate">
@@ -117,22 +117,6 @@ export default function ProfileCard() {
               ))}
             </div>
           )}
-        </div>
-
-        {/* Placeholder: Activity */}
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 border-dashed opacity-60">
-          <h2 className="text-lg font-semibold mb-2">Activity</h2>
-          <p className="text-gray-500 text-sm">
-            Coming soon — your recent activity will appear here.
-          </p>
-        </div>
-
-        {/* Placeholder: Settings */}
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 border-dashed opacity-60">
-          <h2 className="text-lg font-semibold mb-2">Settings</h2>
-          <p className="text-gray-500 text-sm">
-            Coming soon — account settings will appear here.
-          </p>
         </div>
       </div>
 

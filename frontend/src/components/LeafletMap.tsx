@@ -70,7 +70,7 @@ export const LeafletMap = () => {
                     setShowList(true)
                     setSelectedLocation(review.locationId)
                   }}
-                  className="mt-2 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                  className="mt-2 px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 p-3"
                 >
                   View Reviews
                 </button>
@@ -79,7 +79,7 @@ export const LeafletMap = () => {
                     setShowForm(true)
                     setSelectedLocation(review.address)
                   }}
-                  className="mt-2 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                  className="ml-3 mt-2 px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 p-3"
                 >
                   Review This Location
                 </button>
@@ -101,9 +101,12 @@ export const LeafletMap = () => {
             top: '10px',
             right: '10px',
             zIndex: 1000,
-            background: 'white',
+            background: 'rgba(14, 14, 14, 0.521)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
             padding: '10px',
             boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+            borderRadius: '0.5rem',
           }}
         >
           <button
@@ -111,7 +114,7 @@ export const LeafletMap = () => {
               setShowForm(true)
               setSelectedLocation(queryLocation)
             }}
-            className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+            className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg--700"
           >
             Create Review
           </button>

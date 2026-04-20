@@ -26,7 +26,9 @@ code {
 }
 
 .backElement {
-  background-color: rgba(31, 41, 55, 0.95);
+  background: rgba(14, 14, 14, 0.521);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow:
@@ -58,11 +60,11 @@ code {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   width: var(--container-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-sm);
   border-width: 1px;
   border-color: rgb(93, 94, 96);
-  background-color: white;
-  background-color: #19222d;
+  background-color: rgba(255, 255, 255, 0.05);
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
 }
@@ -81,8 +83,8 @@ code {
 
 .button {
   width: var(--container-sm);
-  background-color: rgb(2, 48, 32);
-  color: rgb(186, 186, 186);
+  background: #2f7d57;
+  color: rgb(255, 255, 255);
   border-radius: var(--radius-md);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

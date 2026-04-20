@@ -38,7 +38,7 @@ export default function ReviewForm({
   return (
     /* Backdrop */
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60"
+      className="fixed text-white inset-0 z-[1000] flex items-center justify-center bg-black/60"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="backElement w-full max-w-md">
