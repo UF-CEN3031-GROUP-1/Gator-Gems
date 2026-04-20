@@ -62,6 +62,13 @@ async def create_review(
         created_at=datetime.now(),
     )
 
+    reviews = session.exec(select(Review).where(Review.created_by == user_email)).all()
+    for entry in reviews:
+        if entry.address == db_review.address:
+            raise HTTPException(
+                status_code=403, detail="Review already exists for this location"
+            )
+
     session.add(db_review)
     session.commit()
     session.refresh(db_review)
